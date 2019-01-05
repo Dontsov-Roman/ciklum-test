@@ -10,7 +10,6 @@ module.exports = webpackMerge(commonConfig, {
   devtool: 'inline-source-map',
   mode: "development",
   entry: {
-    polyfills: 'polyfills.ts',
     hotLoader: ['react-hot-loader/patch', 'webpack/hot/only-dev-server'],
     devServer: 'webpack-dev-server/client?http://localhost:3000',
     app: 'index.tsx'
@@ -36,6 +35,9 @@ module.exports = webpackMerge(commonConfig, {
 
       }
     ]
+  },
+  optimization: {
+    concatenateModules: false
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

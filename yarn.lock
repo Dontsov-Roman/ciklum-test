@@ -8,52 +8,16 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@types/history@*":
-  version "4.7.2"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/history/-/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"
-
-"@types/immutable@^3.8.7":
-  version "3.8.7"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/immutable/-/immutable-3.8.7.tgz#536d33d30f3f3d9a6d4642a219419fd82af633fb"
-  dependencies:
-    immutable "*"
-
 "@types/prop-types@*":
   version "15.5.8"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/prop-types/-/prop-types-15.5.8.tgz#8ae4e0ea205fe95c3901a5a1df7f66495e3a56ce"
 
-"@types/react-redux@^6.0.12":
-  version "6.0.12"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/react-redux/-/react-redux-6.0.12.tgz#f3e9a400b8d40db43ffd8949ce14db4aa17a53ce"
-  dependencies:
-    "@types/react" "*"
-    redux "^4.0.0"
-
-"@types/react-router@^4.4.3":
-  version "4.4.3"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/react-router/-/react-router-4.4.3.tgz#ea68b4021cb576866f83365b2201411537423d50"
-  dependencies:
-    "@types/history" "*"
-    "@types/react" "*"
-
-"@types/react@*", "@types/react@^16.7.18":
+"@types/react@^16.7.18":
   version "16.7.18"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/react/-/react-16.7.18.tgz#f4ce0d539a893dd61e36cd11ae3a5e54f5a48337"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
-
-"@types/redux-thunk@^2.1.0":
-  version "2.1.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/redux-thunk/-/redux-thunk-2.1.0.tgz#bc2b6e972961831afb82a9bf4f06726e351f9416"
-  dependencies:
-    redux-thunk "*"
-
-"@types/redux@^3.6.0":
-  version "3.6.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/redux/-/redux-3.6.0.tgz#f1ebe1e5411518072e4fdfca5c76e16e74c1399a"
-  dependencies:
-    redux "*"
 
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
@@ -2735,10 +2699,6 @@ ignore-walk@^3.0.1:
   dependencies:
     minimatch "^3.0.4"
 
-immutable@*:
-  version "3.8.2"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
-
 immutable@^4.0.0-rc.12:
   version "4.0.0-rc.12"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/immutable/-/immutable-4.0.0-rc.12.tgz#ca59a7e4c19ae8d9bf74a97bdf0f6e2f2a5d0217"
@@ -4241,15 +4201,15 @@ recast@~0.11.12:
     private "~0.1.5"
     source-map "~0.5.0"
 
-redux-thunk@*:
+redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
 
-redux@*, redux@^4.0.0, redux@^4.0.1:
-  version "4.0.1"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
+redux@^4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://ems.jfrog.io/ems/api/npm/registry/redux/-/redux-4.0.0-rc.1.tgz#80ec04db9837711dbf67e8f1915726dbcdbcbd88"
   dependencies:
-    loose-envify "^1.4.0"
+    loose-envify "^1.1.0"
     symbol-observable "^1.2.0"
 
 regenerate@^1.2.1:

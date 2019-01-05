@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "es6",
     "target": "es6",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
     "baseUrl": "/",
     "noImplicitAny": false,
     "sourceMap": true,
