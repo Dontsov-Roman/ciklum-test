@@ -5,8 +5,12 @@ import { AppRedux } from "./redux";
 import App from "./features/app";
 import "./translations";
 const rootEl = document.getElementById("app");
+const appRedux = new AppRedux();
+
 render(
-    <App />
+    <Provider store={appRedux.store}>
+        <App />
+    </Provider>
     ,
     rootEl
 );

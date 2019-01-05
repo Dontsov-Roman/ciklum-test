@@ -1,6 +1,7 @@
-import { createStore, Action, Store } from "redux/lib/redux";
+import thunk from "redux-thunk";
+import { createStore, Action, Store, applyMiddleware  } from "redux/lib/redux";
 import reducer from "./reducers";
-import { IStore } from "./store";
+import IStore from "./store";
 
 export class AppRedux {
     store: Store<IStore>;
@@ -23,7 +24,8 @@ export class AppRedux {
 
         const store = createStore<IStore, any, any, any>(
             reducer,
-            persistedState
+            persistedState,
+            applyMiddleware(thunk)
         );
 
         return store;

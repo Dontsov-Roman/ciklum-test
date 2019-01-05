@@ -1,5 +1,7 @@
 import { combineReducers } from "redux/lib/redux";
-import { IStore } from "../store";
+import IStore from "../store";
+import paragraphs from "../../features/paragraphs/redux/reducer";
+
 export default combineReducers<IStore>({
-    suggestions: (a: any) => a
+    paragraphs
 });
