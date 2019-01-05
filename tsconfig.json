@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "/",
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "outDir": "ts-build",
+    "allowJs": true,
+    "jsx": "preserve",
+    "types": [ ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "noResolve": false,
+    "noLib": false,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false
+  },
+  "include": [
+    "src/**/*",
+    "type-declarations/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/spec.tsx",
+    "**/spec.ts",
+    "src/ems/api/tests/*"
+  ]
+}
