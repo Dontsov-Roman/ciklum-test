@@ -6,19 +6,27 @@ export interface IParagraph {
     article: string;
     text: string;
 }
+export interface IResponse {
+    paragraphs: string[];
+    title: string;
+}
 
 const repository: IRepository<IParagraph> = {
     getAll: async (params?: IParams) => {
         try {
             let url: string = `${generalUrl}/article`;
             if (params) {
-                url = `${url}${stringify}`;
-                console.warn(url);
+                url = `${url}?${stringify(params)}`;
             }
-            const { data, status } = await axios.get<IParagraph[]>(url);
-            if (status < 300)
-                return data;
-            return [];
+            const { data: { paragraphs }, status } = await axios.get<IResponse>(url);
+            const data: IParagraph[] = [];
+            if (status < 400 && paragraphs && paragraphs.length) {
+                paragraphs.map(article => data.push({
+                    article,
+                    text: ""
+                }));
+            }
+            return data;
         } catch (e) {
             console.warn(e);
             return [];

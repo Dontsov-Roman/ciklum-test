@@ -1,23 +1,20 @@
 import * as React from "react";
-import { withNamespaces, WithNamespaces } from "react-i18next";
-import { connect } from "react-redux";
-import IStore from "../../redux/store";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Paragraphs from "../paragraphs";
 
-interface IStoreProps {}
-type IProps = WithNamespaces & IStoreProps;
-
-class App extends React.Component<IProps> {
+class App extends React.Component {
     render() {
-        const { t } = this.props;
         return (
-            <div>
-                <Paragraphs />
-            </div>
+            <Router
+                basename="/fb"
+            >
+                <div>
+                    <Route exact path="/" component={Paragraphs} />
+                    <Route path="/results" render={() => <div>results</div>} />
+                </div>
+            </Router>
         );
     }
 }
 
-export default connect(
-    (state: IStore): IStoreProps => ({})
-)(withNamespaces()(App));
+export default App;

@@ -2,68 +2,13 @@
 # yarn lockfile v1
 
 
-"@babel/runtime@7.1.2":
-  version "7.1.2"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@babel/runtime/-/runtime-7.1.2.tgz#81c89935f4647706fc54541145e6b4ecfef4b8e3"
-  dependencies:
-    regenerator-runtime "^0.12.0"
-
-"@babel/runtime@7.2.0", "@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0":
   version "7.2.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/@babel/runtime/-/runtime-7.2.0.tgz#b03e42eeddf5898e00646e4c840fa07ba8dcad7f"
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@material-ui/core@^3.8.1":
-  version "3.8.1"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@material-ui/core/-/core-3.8.1.tgz#ee8697732afd1856504044646c20a33ca1c6fab5"
-  dependencies:
-    "@babel/runtime" "7.2.0"
-    "@material-ui/system" "^3.0.0-alpha.0"
-    "@material-ui/utils" "^3.0.0-alpha.2"
-    "@types/jss" "^9.5.6"
-    "@types/react-transition-group" "^2.0.8"
-    brcast "^3.0.1"
-    classnames "^2.2.5"
-    csstype "^2.5.2"
-    debounce "^1.1.0"
-    deepmerge "^3.0.0"
-    dom-helpers "^3.2.1"
-    hoist-non-react-statics "^3.2.1"
-    is-plain-object "^2.0.4"
-    jss "^9.8.7"
-    jss-camel-case "^6.0.0"
-    jss-default-unit "^8.0.2"
-    jss-global "^3.0.0"
-    jss-nested "^6.0.1"
-    jss-props-sort "^6.0.0"
-    jss-vendor-prefixer "^7.0.0"
-    keycode "^2.1.9"
-    normalize-scroll-left "^0.1.2"
-    popper.js "^1.14.1"
-    prop-types "^15.6.0"
-    react-event-listener "^0.6.2"
-    react-transition-group "^2.2.1"
-    recompose "0.28.0 - 0.30.0"
-    warning "^4.0.1"
-
-"@material-ui/system@^3.0.0-alpha.0":
-  version "3.0.0-alpha.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@material-ui/system/-/system-3.0.0-alpha.0.tgz#1f488d5a56a4803b0d1d11fd86b8722732c90b15"
-  dependencies:
-    "@babel/runtime" "7.1.2"
-    deepmerge "^2.0.1"
-    warning "^4.0.1"
-
-"@material-ui/utils@^3.0.0-alpha.2":
-  version "3.0.0-alpha.2"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@material-ui/utils/-/utils-3.0.0-alpha.2.tgz#6510aa1c5ff3f7ccc80736ee5dbec03870ab432c"
-  dependencies:
-    "@babel/runtime" "7.2.0"
-    prop-types "^15.6.0"
-    react-is "^16.6.3"
-
-"@types/jss@^9.5.6":
+"@types/jss@^9.5.7":
   version "9.5.7"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/jss/-/jss-9.5.7.tgz#fa57a6d0b38a3abef8a425e3eb6a53495cb9d5a0"
   dependencies:
@@ -80,12 +25,6 @@
   dependencies:
     "@types/react" "*"
     redux "^4.0.0"
-
-"@types/react-transition-group@^2.0.8":
-  version "2.0.15"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/react-transition-group/-/react-transition-group-2.0.15.tgz#e5ee3fe558832e141cc6041bdd54caea7b787af8"
-  dependencies:
-    "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.7.18":
   version "16.7.18"
@@ -368,10 +307,6 @@ array-uniq@^1.0.1:
 array-unique@^0.3.2:
   version "0.3.2"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/array-unique/-/array-unique-0.3.2.tgz#a894b75d4bc4f6cd679ef3244a9fd8f46ae2d428"
-
-asap@~2.0.3:
-  version "2.0.6"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
 
 asn1.js@^4.0.0:
   version "4.10.1"
@@ -1233,10 +1168,6 @@ braces@^2.3.0, braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-brcast@^3.0.1:
-  version "3.0.1"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/brcast/-/brcast-3.0.1.tgz#6256a8349b20de9eed44257a9b24d71493cd48dd"
-
 brorand@^1.0.1:
   version "1.1.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
@@ -1396,10 +1327,6 @@ chalk@2.4.1, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.4.1:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-change-emitter@^0.1.2:
-  version "0.1.6"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/change-emitter/-/change-emitter-0.1.6.tgz#e8b2fe3d7f1ab7d69a32199aff91ea6931409515"
-
 chardet@^0.4.0:
   version "0.4.2"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
@@ -1448,10 +1375,6 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
-
-classnames@^2.2.5:
-  version "2.2.6"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
 clean-css@4.2.x:
   version "4.2.1"
@@ -1619,10 +1542,6 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
 
-core-js@^1.0.0:
-  version "1.2.7"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
-
 core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.1"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/core-js/-/core-js-2.6.1.tgz#87416ae817de957a3f249b3b5ca475d4aaed6042"
@@ -1717,12 +1636,6 @@ css-selector-tokenizer@^0.7.0:
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
 
-css-vendor@^0.3.8:
-  version "0.3.8"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/css-vendor/-/css-vendor-0.3.8.tgz#6421cfd3034ce664fe7673972fd0119fc28941fa"
-  dependencies:
-    is-in-browser "^1.0.2"
-
 css-what@2.1:
   version "2.1.2"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/css-what/-/css-what-2.1.2.tgz#c0876d9d0480927d7d4920dcd72af3595649554d"
@@ -1740,7 +1653,7 @@ cssesc@^0.1.0:
   version "0.1.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/cssesc/-/cssesc-0.1.0.tgz#c814903e45623371a0477b40109aaafbeeaddbb4"
 
-csstype@^2.0.0, csstype@^2.2.0, csstype@^2.5.2:
+csstype@^2.0.0, csstype@^2.2.0:
   version "2.6.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/csstype/-/csstype-2.6.0.tgz#6cf7b2fa7fc32aab3d746802c244d4eda71371a2"
 
@@ -1757,10 +1670,6 @@ d@1:
 date-now@^0.1.4:
   version "0.1.4"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
-
-debounce@^1.1.0:
-  version "1.2.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
 
 debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
@@ -1807,14 +1716,6 @@ deep-equal@^1.0.1:
 deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
-
-deepmerge@^2.0.1:
-  version "2.2.1"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
-
-deepmerge@^3.0.0:
-  version "3.0.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/deepmerge/-/deepmerge-3.0.0.tgz#ca7903b34bfa1f8c2eab6779280775a411bfc6ba"
 
 default-gateway@^2.6.0:
   version "2.7.2"
@@ -1930,12 +1831,6 @@ dom-converter@~0.2:
   resolved "https://ems.jfrog.io/ems/api/npm/registry/dom-converter/-/dom-converter-0.2.0.tgz#6721a9daee2e293682955b6afe416771627bb768"
   dependencies:
     utila "~0.4"
-
-dom-helpers@^3.2.1, dom-helpers@^3.3.1:
-  version "3.4.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
-  dependencies:
-    "@babel/runtime" "^7.1.2"
 
 dom-serializer@0:
   version "0.1.0"
@@ -2312,18 +2207,6 @@ faye-websocket@~0.11.1:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fbjs@^0.8.1:
-  version "0.8.17"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
-  dependencies:
-    core-js "^1.0.0"
-    isomorphic-fetch "^2.1.1"
-    loose-envify "^1.0.0"
-    object-assign "^4.1.0"
-    promise "^7.1.1"
-    setimmediate "^1.0.5"
-    ua-parser-js "^0.7.18"
-
 figgy-pudding@^3.5.1:
   version "3.5.1"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
@@ -2674,7 +2557,7 @@ hoist-non-react-statics@3.0.1:
   dependencies:
     react-is "^16.3.2"
 
-hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
@@ -2796,10 +2679,6 @@ http-proxy@^1.16.2:
 https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
-
-hyphenate-style-name@^1.0.2:
-  version "1.0.2"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
 
 i18next@^13.1.0:
   version "13.1.0"
@@ -3040,10 +2919,6 @@ is-glob@^4.0.0:
   dependencies:
     is-extglob "^2.1.1"
 
-is-in-browser@^1.0.2, is-in-browser@^1.1.3:
-  version "1.1.3"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/is-in-browser/-/is-in-browser-1.1.3.tgz#56ff4db683a078c6082eb95dad7dc62e1d04f835"
-
 is-number@^3.0.0:
   version "3.0.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/is-number/-/is-number-3.0.0.tgz#24fd6201a4782cf50561c810276afc7d12d71195"
@@ -3122,13 +2997,6 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomorphic-fetch@^2.1.1:
-  version "2.2.1"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
-  dependencies:
-    node-fetch "^1.0.1"
-    whatwg-fetch ">=0.10.0"
-
 "js-tokens@^3.0.0 || ^4.0.0":
   version "4.0.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -3180,48 +3048,6 @@ json5@^1.0.1:
   resolved "https://ems.jfrog.io/ems/api/npm/registry/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
   dependencies:
     minimist "^1.2.0"
-
-jss-camel-case@^6.0.0:
-  version "6.1.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/jss-camel-case/-/jss-camel-case-6.1.0.tgz#ccb1ff8d6c701c02a1fed6fb6fb6b7896e11ce44"
-  dependencies:
-    hyphenate-style-name "^1.0.2"
-
-jss-default-unit@^8.0.2:
-  version "8.0.2"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/jss-default-unit/-/jss-default-unit-8.0.2.tgz#cc1e889bae4c0b9419327b314ab1c8e2826890e6"
-
-jss-global@^3.0.0:
-  version "3.0.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/jss-global/-/jss-global-3.0.0.tgz#e19e5c91ab2b96353c227e30aa2cbd938cdaafa2"
-
-jss-nested@^6.0.1:
-  version "6.0.1"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/jss-nested/-/jss-nested-6.0.1.tgz#ef992b79d6e8f63d939c4397b9d99b5cbbe824ca"
-  dependencies:
-    warning "^3.0.0"
-
-jss-props-sort@^6.0.0:
-  version "6.0.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/jss-props-sort/-/jss-props-sort-6.0.0.tgz#9105101a3b5071fab61e2d85ea74cc22e9b16323"
-
-jss-vendor-prefixer@^7.0.0:
-  version "7.0.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/jss-vendor-prefixer/-/jss-vendor-prefixer-7.0.0.tgz#0166729650015ef19d9f02437c73667231605c71"
-  dependencies:
-    css-vendor "^0.3.8"
-
-jss@^9.8.7:
-  version "9.8.7"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/jss/-/jss-9.8.7.tgz#ed9763fc0f2f0260fc8260dac657af61e622ce05"
-  dependencies:
-    is-in-browser "^1.1.3"
-    symbol-observable "^1.1.0"
-    warning "^3.0.0"
-
-keycode@^2.1.9:
-  version "2.2.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
 
 killable@^1.0.0:
   version "1.0.1"
@@ -3690,13 +3516,6 @@ node-fetch@1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-fetch@^1.0.1:
-  version "1.7.3"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
-  dependencies:
-    encoding "^0.1.11"
-    is-stream "^1.0.1"
-
 node-forge@0.7.5:
   version "0.7.5"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/node-forge/-/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
@@ -3765,10 +3584,6 @@ normalize-path@^2.1.1:
   resolved "https://ems.jfrog.io/ems/api/npm/registry/normalize-path/-/normalize-path-2.1.1.tgz#1ab28b556e198363a8c1a6f7e6fa20137fe6aed9"
   dependencies:
     remove-trailing-separator "^1.0.1"
-
-normalize-scroll-left@^0.1.2:
-  version "0.1.2"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/normalize-scroll-left/-/normalize-scroll-left-0.1.2.tgz#6b79691ba79eb5fb107fa5edfbdc06b55caee2aa"
 
 npm-bundled@^1.0.1:
   version "1.0.5"
@@ -4103,10 +3918,6 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-popper.js@^1.14.1:
-  version "1.14.6"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/popper.js/-/popper.js-1.14.6.tgz#ab20dd4edf9288b8b3b6531c47c361107b60b4b0"
-
 portfinder@^1.0.9:
   version "1.0.20"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/portfinder/-/portfinder-1.0.20.tgz#bea68632e54b2e13ab7b0c4775e9b41bf270e44a"
@@ -4186,13 +3997,7 @@ promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
 
-promise@^7.1.1:
-  version "7.3.1"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
-  dependencies:
-    asap "~2.0.3"
-
-prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -4322,14 +4127,6 @@ react-dom@^16.7.0:
     prop-types "^15.6.2"
     scheduler "^0.12.0"
 
-react-event-listener@^0.6.2:
-  version "0.6.5"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/react-event-listener/-/react-event-listener-0.6.5.tgz#d374dbe5da485c9f9d4702f0e76971afbe9b6b2e"
-  dependencies:
-    "@babel/runtime" "7.2.0"
-    prop-types "^15.6.0"
-    warning "^4.0.1"
-
 react-hot-loader@^4.6.3:
   version "4.6.3"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/react-hot-loader/-/react-hot-loader-4.6.3.tgz#d9c8923c45b35fd51538ba4297081a00be6bccb1"
@@ -4356,7 +4153,7 @@ react-is@^16.3.2, react-is@^16.6.3:
   version "16.7.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/react-is/-/react-is-16.7.0.tgz#c1bd21c64f1f1364c6f70695ec02d69392f41bfa"
 
-react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
+react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
@@ -4371,6 +4168,17 @@ react-redux@^6.0.0:
     prop-types "^15.6.2"
     react-is "^16.6.3"
 
+react-router-dom@^4.3.1:
+  version "4.3.1"
+  resolved "https://ems.jfrog.io/ems/api/npm/registry/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
+  dependencies:
+    history "^4.7.2"
+    invariant "^2.2.4"
+    loose-envify "^1.3.1"
+    prop-types "^15.6.1"
+    react-router "^4.3.1"
+    warning "^4.0.1"
+
 react-router@^4.3.1:
   version "4.3.1"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/react-router/-/react-router-4.3.1.tgz#aada4aef14c809cb2e686b05cee4742234506c4e"
@@ -4382,15 +4190,6 @@ react-router@^4.3.1:
     path-to-regexp "^1.7.0"
     prop-types "^15.6.1"
     warning "^4.0.1"
-
-react-transition-group@^2.2.1:
-  version "2.5.2"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/react-transition-group/-/react-transition-group-2.5.2.tgz#9457166a9ba6ce697a3e1b076b3c049b9fb2c408"
-  dependencies:
-    dom-helpers "^3.3.1"
-    loose-envify "^1.4.0"
-    prop-types "^15.6.2"
-    react-lifecycles-compat "^3.0.4"
 
 react@^16.7.0:
   version "16.7.0"
@@ -4446,17 +4245,6 @@ recast@~0.11.12:
     esprima "~3.1.0"
     private "~0.1.5"
     source-map "~0.5.0"
-
-"recompose@0.28.0 - 0.30.0":
-  version "0.30.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/recompose/-/recompose-0.30.0.tgz#82773641b3927e8c7d24a0d87d65aeeba18aabd0"
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    change-emitter "^0.1.2"
-    fbjs "^0.8.1"
-    hoist-non-react-statics "^2.3.1"
-    react-lifecycles-compat "^3.0.2"
-    symbol-observable "^1.0.4"
 
 redux-thunk@2.1.0:
   version "2.1.0"
@@ -4828,7 +4616,7 @@ set-value@^2.0.0:
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
 
-setimmediate@^1.0.4, setimmediate@^1.0.5:
+setimmediate@^1.0.4:
   version "1.0.5"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"
 
@@ -5121,7 +4909,7 @@ supports-color@^5.1.0, supports-color@^5.3.0, supports-color@^5.5.0:
   dependencies:
     has-flag "^3.0.0"
 
-symbol-observable@1.2.0, symbol-observable@^1.0.4, symbol-observable@^1.1.0, symbol-observable@^1.2.0:
+symbol-observable@1.2.0, symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 
@@ -5278,10 +5066,6 @@ type-is@~1.6.16:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
-
-ua-parser-js@^0.7.18:
-  version "0.7.19"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/ua-parser-js/-/ua-parser-js-0.7.19.tgz#94151be4c0a7fb1d001af7022fdaca4642659e4b"
 
 uglify-js@3.4.x:
   version "3.4.9"
@@ -5579,10 +5363,6 @@ websocket-driver@>=0.5.1:
 websocket-extensions@>=0.1.1:
   version "0.1.3"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
-
-whatwg-fetch@>=0.10.0:
-  version "3.0.0"
-  resolved "https://ems.jfrog.io/ems/api/npm/registry/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
 
 which-module@^2.0.0:
   version "2.0.0"

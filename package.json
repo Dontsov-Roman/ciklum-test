@@ -10,7 +10,7 @@
     "build": "rimraf dist && webpack --config config/webpack.config.prod.js --progress --profile --bail"
   },
   "dependencies": {
-    "@material-ui/core": "^3.8.1",
+    "@types/jss": "^9.5.7",
     "@types/react": "^16.7.18",
     "@types/react-redux": "^6.0.12",
     "awesome-typescript-loader": "^5.2.1",
@@ -36,6 +36,7 @@
     "react-i18next": "^9.0.2",
     "react-redux": "^6.0.0",
     "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "redux": "^4.0.0-rc.1",
     "redux-thunk": "2.1.0",
     "resolve-url-loader": "^3.0.0",
