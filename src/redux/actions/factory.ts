@@ -5,14 +5,15 @@ import IStore from "../store";
 
 export type SimpleThunkAction = ThunkAction<void, IStore, any, any>;
 
-export interface IFactoryAction {
+export interface IFactoryAction<RepoItem> {
     getAll: (params?: IParams) => SimpleThunkAction;
     getById: (id: string | number) => SimpleThunkAction;
     removeByIdIndex: (id: string | number, index: number) => SimpleThunkAction;
+    updateByIndex: (index: number, item: RepoItem) => SimpleThunkAction;
 }
 
-export default <RepoItem>(constants: IConstants, repository: IRepository<RepoItem>): IFactoryAction => {
-    const action: IFactoryAction = {
+export default <RepoItem>(constants: IConstants, repository: IRepository<RepoItem>): IFactoryAction<RepoItem> => {
+    const action: IFactoryAction<RepoItem> = {
         getAll: (params) => async (dispatch, getState) => {
             dispatch({
                 type: constants.getAllRequest
@@ -60,6 +61,12 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
                 console.warn(e);
             }
         },
+        updateByIndex: (index, item) => async (dispatch, getState) => {
+            dispatch({
+                type: constants.updateByIndex,
+                payload: { item, index }
+            });
+        }
     };
     return action;
 };

@@ -13,7 +13,6 @@ const WithOnmount = (Component: React.ComponentType<P>) =>
         };
         componentWillMount() {
             const { onMount, location: { search } } = this.props;
-            console.warn(search, parse(search));
             onMount(parse(search));
         }
         render() {

@@ -53,6 +53,14 @@ export default <Item, State extends ISimpleState<Item>>(constants: IConstants, i
                     current: undefined
                 };
             }
+            case constants.updateByIndex: {
+                const { index, item } = action.payload;
+                console.warn(index, item);
+                return {
+                    ...state,
+                    data: state.data.update(index, () => item)
+                };
+            }
             case constants.removeByIndex: {
                 return {
                     ...state,

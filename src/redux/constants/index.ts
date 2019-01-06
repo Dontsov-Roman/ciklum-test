@@ -5,6 +5,7 @@ export default interface IConstants {
     getByIdRequest: string;
     getByIdSuccess: string;
     getByIdFail: string;
+    updateByIndex: string;
     removeByIndex?: string;
     [key: string]: string;
 }

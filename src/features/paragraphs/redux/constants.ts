@@ -6,6 +6,7 @@ const constants: IConstants = {
     getByIdRequest: "PARAGRAPHS_GET_BY_ID_REQUEST",
     getByIdSuccess: "PARAGRAPHS_GET_GET_BY_ID_REQUEST",
     getByIdFail: "PARAGRAPHS_GET_GET_BY_ID_REQUEST",
-    removeByIndex: "PARAGRAPHS_REMOVE_BY_INDEX"
+    removeByIndex: "PARAGRAPHS_REMOVE_BY_INDEX",
+    updateByIndex: "PARAGRAPHS_UPDATE_BY_INDEX"
 };
 export default constants;
