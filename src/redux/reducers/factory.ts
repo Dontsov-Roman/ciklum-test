@@ -1,5 +1,5 @@
-import IConstants from "../constants";
-import { Reducer, AnyAction } from "redux";
+import IConstants, { IConstantsCreate } from "../constants";
+import { Reducer, AnyAction } from "redux/lib/redux";
 import { List } from "immutable";
 
 export interface ISimpleState<Item> {
@@ -9,8 +9,24 @@ export interface ISimpleState<Item> {
     current?: Item;
     [key: string]: any;
 }
-
-export default <Item, State extends ISimpleState<Item>>(constants: IConstants, initState: State): Reducer<State, AnyAction> =>
+export const FactoryWithCreate = <Item, State extends ISimpleState<Item>>
+    (constants: IConstantsCreate, initState: State): Reducer<State, AnyAction> =>
+    (state: State = initState, action: AnyAction): State => {
+        switch(action.type) {
+            case constants.createItemRequest: {
+                return { ...state, fetchingOne: true };
+            }
+            case constants.createItemFail: {
+                return { ...state, fetchingOne: false };
+            }
+            case constants.createItemSuccess: {
+                return { ...state, fetchingOne: false, data: state.data.push(action.payload) };
+            }
+            default: return state;
+        }
+    };
+export default <Item, State extends ISimpleState<Item>>
+    (constants: IConstants, initState: State): Reducer<State, AnyAction> =>
     (state: State = initState, action: AnyAction): State => {
         switch (action.type) {
             case constants.getAllRequest: {
@@ -55,7 +71,6 @@ export default <Item, State extends ISimpleState<Item>>(constants: IConstants, i
             }
             case constants.updateByIndex: {
                 const { index, item } = action.payload;
-                console.warn(index, item);
                 return {
                     ...state,
                     data: state.data.update(index, () => item)

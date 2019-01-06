@@ -1,5 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import IConstants from "../constants";
+import IConstants, { IConstantsCreate } from "../constants";
 import IRepository, { IParams } from "../../repository/IRepository";
 import IStore from "../store";
 
@@ -11,6 +11,30 @@ export interface IFactoryAction<RepoItem> {
     removeByIdIndex: (id: string | number, index: number) => SimpleThunkAction;
     updateByIndex: (index: number, item: RepoItem) => SimpleThunkAction;
 }
+export interface IFactoryActionCreate<RepoItem> {
+    create: (item: RepoItem) => SimpleThunkAction;
+}
+export const FactoryWithCreate =
+    <RepoItem>(constants: IConstantsCreate, repository: IRepository<RepoItem>)
+        : IFactoryActionCreate<RepoItem> => ({
+            create: (item) => async (dispatch, getState) => {
+                dispatch({ type: constants.createItemRequest });
+                try {
+                    const payload = await repository.create(item);
+                    if(payload) {
+                        dispatch({
+                            type: constants.createItemSuccess,
+                            payload
+                        });
+                    }
+                }
+                catch(e) {
+                    console.warn(e);
+                    dispatch({ type: constants.createItemFail });
+                }
+            }
+        });
+
 
 export default <RepoItem>(constants: IConstants, repository: IRepository<RepoItem>): IFactoryAction<RepoItem> => {
     const action: IFactoryAction<RepoItem> = {

@@ -23,17 +23,6 @@ module.exports = webpackMerge(commonConfig, {
     rules: [
       // { test: /.js$/, loader: 'babel-loader' }, // for test in IE11 localy
       { test: /\.html$/, loader: 'html-loader' },
-      { test: /\.css$/, use: [{ loader: "style-loader" }, { loader: "css-loader" }] },
-      {
-        test: /\.scss$/,
-        use: [{ loader: "style-loader" }, { loader: "css-loader" }, { loader: "sass-loader" }, {
-          loader: 'sass-resources-loader',
-          options: {
-            resources: "sass/sass-resources.scss",
-          }
-        }],
-
-      }
     ]
   },
   optimization: {

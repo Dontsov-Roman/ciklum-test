@@ -3,6 +3,8 @@ var path = require('path');
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', '.jsx'],
@@ -13,7 +15,7 @@ module.exports = {
     noParse: [/node_modules\/simple-dijs\/dist\/di.js/, /dtrace-provider/, /safe-json-stringify/, /mv/, /source-map-support/],
     rules: [
       { test: /\.(jsx|js)?$/, use: [{ loader: 'babel-loader' }] },
-      { test: /\.(tsx|ts)?$/, use: [{ loader: 'babel-loader' }, { loader: 'awesome-typescript-loader' }] },
+      { test: /\.(tsx|ts)?$/, use: [{ loader: 'babel-loader' }, { loader: 'ts-loader' }] },
       { test: /^(?!.*\.spec\.js$).*\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/, loader: 'file-loader?name=assets/[name].[hash].[ext]' },
       {
@@ -25,10 +27,23 @@ module.exports = {
           failOnHint: true,
           configFile: './tslint.json'
         }
+      },
+            {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract(
+          {
+            fallback: 'style-loader',
+            use: ['style-loader', 'css-loader', 'sass-loader']
+          })
       }
     ]
   },
   plugins: [
+    new ExtractTextPlugin("style.css"),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/index.html'

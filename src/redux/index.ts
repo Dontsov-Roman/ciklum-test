@@ -1,5 +1,5 @@
 import thunk from "redux-thunk";
-import { createStore, Action, Store, applyMiddleware  } from "redux/lib/redux";
+import { createStore, Store, applyMiddleware  } from "redux/lib/redux";
 import reducer from "./reducers";
 import IStore from "./store";
 

@@ -7,5 +7,10 @@ export default interface IConstants {
     getByIdFail: string;
     updateByIndex: string;
     removeByIndex?: string;
-    [key: string]: string;
+}
+
+export interface IConstantsCreate {
+    createItemRequest: string;
+    createItemSuccess: string;
+    createItemFail: string;
 }

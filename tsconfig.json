@@ -27,7 +27,6 @@
   "exclude": [
     "node_modules",
     "**/spec.tsx",
-    "**/spec.ts",
-    "src/ems/api/tests/*"
+    "**/spec.ts"
   ]
 }

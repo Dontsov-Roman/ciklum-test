@@ -6,4 +6,6 @@ export default interface IRepository<T> {
     getAll: (params?: IParams) => Promise<T[]>;
     getOne: (id: string | number) => Promise<T>;
     remove: (id: string | number) => Promise<boolean>;
+    create?: (item: T) => Promise<T>;
+    update?: (item: T) => Promise<boolean>;
 }

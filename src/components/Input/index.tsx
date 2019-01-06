@@ -1,5 +1,6 @@
 import * as React from "react";
 import { debounce } from "lodash";
+// import "./style.css";
 
 interface IProps {
     onChange: (text: string) => void;
@@ -11,7 +12,11 @@ export default class extends React.Component<IProps> {
     render() {
         const { defaultValue } = this.props;
         return (
-            <textarea onChange={(e) => this.onChange(e.target.value)} defaultValue={defaultValue} />
+            <textarea
+                className="my-textarea"
+                onChange={(e) => this.onChange(e.target.value)}
+                defaultValue={defaultValue}
+            />
         );
     }
 }

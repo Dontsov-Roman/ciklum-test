@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var commonConfig = require('./webpack.config.common.js');
 var WebpackNotifierPlugin = require('webpack-notifier');
 
@@ -9,6 +8,7 @@ const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = webpackMerge(commonConfig, {
     devtool: 'inline-source-map',
+    mode: "production",
     entry: {
         polyfills: 'polyfills.ts',
         app: 'index.tsx'
@@ -21,24 +21,7 @@ module.exports = webpackMerge(commonConfig, {
     module: {
         rules: [
             { test: /.js$/, loader: 'babel-loader' },
-            { test: /\.html$/, loader: 'html-loader', options: { minimize: true } },
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [{
-                        loader: "css-loader"
-                    }]
-                })
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract([{ loader: "css-loader" }, { loader: "sass-loader" }, {
-                    loader: "sass-resources-loader", options: {
-                        resources: "sass/sass-resources.scss",
-                    }
-                }])
-            }
+            { test: /\.html$/, loader: 'html-loader', options: { minimize: true } }
         ]
     },
     optimization: {
@@ -67,7 +50,6 @@ module.exports = webpackMerge(commonConfig, {
     },
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
-        new ExtractTextPlugin('styles.css'),
         new webpack.DefinePlugin({
             'process.env': {
                 'ENV': JSON.stringify(ENV),
