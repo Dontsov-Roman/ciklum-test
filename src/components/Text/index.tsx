@@ -1,4 +1,6 @@
 import * as React from "react";
+import BrowserLayout, { Browsers } from "../Layouts/Browser";
+import "./style.scss";
 import "./style.scss";
 
 interface IProps {
@@ -21,4 +23,14 @@ Text.defaultProps = {
     italic: false,
     bold: false
 };
-export default Text;
+export default class ThemedText extends React.Component<IProps, {}, Browsers> {
+    static contextType = BrowserLayout;
+    render () {
+        let { italic, bold } = this.props;
+        if (this.context === Browsers.Mobile) {
+            italic = true;
+            bold = true;
+        }
+        return <Text {...this.props} italic={italic} bold={bold} />;
+    }
+}
