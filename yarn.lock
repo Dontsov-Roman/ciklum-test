@@ -582,6 +582,12 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/redux@^3.6.0":
+  version "3.6.0"
+  resolved "https://ems.jfrog.io/ems/api/npm/registry/@types/redux/-/redux-3.6.0.tgz#f1ebe1e5411518072e4fdfca5c76e16e74c1399a"
+  dependencies:
+    redux "*"
+
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/@webassemblyjs/ast/-/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
@@ -5335,7 +5341,7 @@ redux-thunk@2.1.0:
   version "2.1.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/redux-thunk/-/redux-thunk-2.1.0.tgz#c724bfee75dbe352da2e3ba9bc14302badd89a98"
 
-redux@^4.0.0, redux@^4.0.1:
+redux@*, redux@^4.0.0, redux@^4.0.1:
   version "4.0.1"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
   dependencies:

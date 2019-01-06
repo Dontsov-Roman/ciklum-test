@@ -1,4 +1,9 @@
+textarea {
+	outline: none;
+	-moz-appearance: none;
+	border: 1px solid #999;
+}
 .my-textarea {
-    color: #222222;
-    background-color: black;
+    resize: none;
+    overflow: hidden;
 }
