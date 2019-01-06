@@ -1,3 +1,5 @@
+@import "../../../sass/main.scss";
+
 textarea {
 	outline: none;
 	-moz-appearance: none;
@@ -5,5 +7,9 @@ textarea {
 }
 .my-textarea {
     resize: none;
-    overflow: hidden;
+	overflow: hidden;
+	width: 100%;
+	min-height: 50px;
+	height: 100%;
+    border-radius: $border-radius;
 }

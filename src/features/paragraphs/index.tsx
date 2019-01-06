@@ -9,6 +9,8 @@ import withLoading from "../shared/hocs/withLoader";
 import withOnmount from "../shared/hocs/withOnmountRouter";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import Text from "../../components/Text";
+import Loader from "../../components/Loader";
 
 interface IStoreProps {
     fetching: boolean;
@@ -27,13 +29,13 @@ export class Paragraphs extends React.Component<IProps> {
             <div>
                 {data.map(({ article, text }, key) => (
                     <div key={key}>
-                        <div>{article}</div>
+                        <Text italic>{article}</Text>
                         <Input
                             onChange={(val) => onChangeItem(key, { article, text: val })}
                             timeout={500}
                             defaultValue={text}
                         />
-                        <Button onClick={() => console.warn("send", text, key)}>
+                        <Button primary onClick={() => console.warn("send", text, key)}>
                             {t("send")}
                         </Button>
                     </div>

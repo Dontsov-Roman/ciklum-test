@@ -1,4 +1,6 @@
 import * as React from "react";
+import Loader from "../../../components/Loader";
+import Centered from "../../../components/Centered";
 
 interface IWithLoadingProps {
     fetching?: boolean;
@@ -11,7 +13,7 @@ const withLoading = (Component: React.ComponentType<P>) =>
         };
         render() {
             const { fetching, ...props } = this.props;
-            return fetching ? <div>loading...</div> : <Component {...props} />;
+            return fetching ? <Centered><Loader size={150} /></Centered> : <Component {...props} />;
         }
 };
 export default withLoading;
