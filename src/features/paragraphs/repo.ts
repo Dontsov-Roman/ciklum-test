@@ -3,8 +3,10 @@ import { stringify } from "query-string";
 import IRepository, { IParams, generalUrl } from "../../repository/IRepository";
 
 export interface IParagraph {
-    article: string;
-    text: string;
+    _id?: string | number;
+    articleUrl: string;
+    originalText: string;
+    usersText: string;
 }
 export interface IResponse {
     paragraphs: string[];
@@ -18,12 +20,13 @@ const repository: IRepository<IParagraph> = {
             if (params) {
                 url = `${url}?${stringify(params)}`;
             }
-            const { data: { paragraphs }, status } = await axios.get<IResponse>(url);
+            const { data: { paragraphs, title }, status } = await axios.get<IResponse>(url);
             const data: IParagraph[] = [];
             if (status < 400 && paragraphs && paragraphs.length) {
-                paragraphs.map(article => data.push({
-                    article,
-                    text: ""
+                paragraphs.map(originalText => data.push({
+                    articleUrl: title,
+                    originalText,
+                    usersText: ""
                 }));
             }
             return data;

@@ -31,17 +31,23 @@ export class Paragraphs extends React.Component<IProps> {
         return (
             <BrowserLayout>
                 <div>
-                    {data.map(({ article, text }, key) => (
-                        <div key={article}>
-                            <Text>{article}</Text>
+                    {data.map((paragraph, key) => (
+                        <div key={`${paragraph.originalText}-${key}`}>
+                            <Text>{paragraph.originalText}</Text>
                             <Input
-                                onChange={(val) => onChangeItem(key, { article, text: val })}
+                                onChange={val => onChangeItem(key, { ...paragraph, usersText: val })}
                                 timeout={500}
-                                defaultValue={text}
+                                defaultValue={paragraph.usersText}
                             />
                             <Button
                                 primary
-                                onClick={() => onSend({ paragraphId: article, text, isApproved: false }, key)}
+                                onClick={() => onSend(
+                                    {
+                                        ...paragraph,
+                                        paragraphId: paragraph._id
+                                    },
+                                    key
+                                )}
                             >
                                 {t("send")}
                             </Button>

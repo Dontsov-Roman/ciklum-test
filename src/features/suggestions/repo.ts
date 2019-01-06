@@ -4,8 +4,10 @@ import IRepository, { IParams, generalUrl } from "../../repository/IRepository";
 
 export interface ISuggestion {
     paragraphId: string | number;
-    text: string;
-    isApproved: boolean;
+    originalText: string;
+    usersText: string;
+    articleUrl?: string;
+    isApproved?: boolean;
 }
 export interface IResponse {
     suggestions: ISuggestion[];
@@ -37,7 +39,18 @@ const repository: IRepository<ISuggestion> = {
         return true;
     },
     create: async (suggestion) => {
-        return suggestion;
+        try {
+            const url: string = `${generalUrl}/suggestion`;
+            const {
+                data,
+                status
+            } = await axios.post<ISuggestion>(url, suggestion);
+            return data;
+        }
+        catch(e) {
+            console.warn(e);
+            return undefined;
+        }
     },
     update: async (suggestion) => {
         return true;
