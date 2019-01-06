@@ -1783,6 +1783,10 @@ bootstrap-sass@^3.4.0:
   version "3.4.0"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/bootstrap-sass/-/bootstrap-sass-3.4.0.tgz#b1c330a56782347f626d31d497fa4aea16b3f99b"
 
+bowser@^2.0.0-beta.3:
+  version "2.0.0-beta.3"
+  resolved "https://ems.jfrog.io/ems/api/npm/registry/bowser/-/bowser-2.0.0-beta.3.tgz#1b74d4fd69199aa237bc0f1f4c5e80df711635d8"
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://ems.jfrog.io/ems/api/npm/registry/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"

@@ -1,5 +1,5 @@
 import * as React from "react";
-import BrowserLayout, { Browsers } from "../Layouts/Browser";
+import { Browsers, Context } from "../Layouts/Browser";
 import "./style.scss";
 import "./style.scss";
 
@@ -24,7 +24,7 @@ Text.defaultProps = {
     bold: false
 };
 export default class ThemedText extends React.Component<IProps, {}, Browsers> {
-    static contextType = BrowserLayout;
+    static contextType = Context;
     render () {
         let { italic, bold } = this.props;
         if (this.context === Browsers.Mobile) {

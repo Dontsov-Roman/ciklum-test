@@ -1,6 +1,6 @@
 import * as React from "react";
 import Centered from "../Centered";
-import BrowserLayout, { Browsers } from "../Layouts/Browser";
+import { Browsers, Context } from "../Layouts/Browser";
 import "./style.scss";
 
 interface IProps {
@@ -27,7 +27,7 @@ export class Button extends React.Component<IProps> {
     }
 }
 export default class ThemedButton extends React.Component<IProps, {}, Browsers> {
-    static contextType = BrowserLayout;
+    static contextType = Context;
     render() {
         let { secondary } = this.props;
         if (this.context === Browsers.Mobile) secondary = false;

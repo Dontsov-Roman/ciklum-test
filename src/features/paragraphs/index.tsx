@@ -12,7 +12,7 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Text from "../../components/Text";
 import { ISuggestion } from "../suggestions/repo";
-import BrowserLayout, { Browsers } from "../../components/Layouts/Browser";
+import BrowserLayout from "../../components/Layouts/Browser";
 
 interface IStoreProps {
     fetching: boolean;
@@ -29,10 +29,10 @@ export class Paragraphs extends React.Component<IProps> {
     render() {
         const { t, data, onChangeItem, onSend } = this.props;
         return (
-            <BrowserLayout.Provider value={Browsers.Standart}>
+            <BrowserLayout>
                 <div>
                     {data.map(({ article, text }, key) => (
-                        <div key={key}>
+                        <div key={article}>
                             <Text>{article}</Text>
                             <Input
                                 onChange={(val) => onChangeItem(key, { article, text: val })}
@@ -48,7 +48,7 @@ export class Paragraphs extends React.Component<IProps> {
                         </div>
                     ))}
                 </div>
-            </BrowserLayout.Provider>
+            </BrowserLayout>
         );
     }
 }
