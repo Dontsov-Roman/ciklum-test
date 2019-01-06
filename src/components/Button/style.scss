@@ -7,12 +7,24 @@
     justify-content: center;
     align-items: center;
     border-radius: $border-radius;
-}
-.my-btn.primary {
-    background-color: $primary-color;
-    color: white;
-}
-.my-btn.secondary {
-    background-color: $secondary-color;
-    color: white;
+    &:hover {
+        opacity: 0.7;
+        filter: alpha(Opacity=70);
+        cursor: pointer;
+    }
+    &.disabled {
+        background-color: $disabled-color;
+        color: white;
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+    &.primary {
+        background-color: $primary-color;
+        color: white;
+    }
+    &.secondary {
+        background-color: $secondary-color;
+        color: white;
+    }
 }

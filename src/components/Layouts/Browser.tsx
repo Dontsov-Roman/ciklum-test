@@ -1,5 +1,7 @@
 import * as React from "react";
 import bowser from "bowser/src/bowser";
+import "./style.scss";
+
 export enum Browsers {
     Standart,
     Mobile,
@@ -22,6 +24,14 @@ export default class BrowserLayout extends React.Component<any, { value: Browser
         }
     }
     render() {
-        return <Context.Provider {...this.state}>{this.props.children}</Context.Provider>;
+        const { value } = this.state;
+        const layout = value === Browsers.Standart ? "desktop-layout" : "mobile-layout";
+        return (
+            <Context.Provider value={value}>
+                <div className={`layout ${layout}`}>
+                    {this.props.children}
+                </div>
+            </Context.Provider>
+        );
     }
 }

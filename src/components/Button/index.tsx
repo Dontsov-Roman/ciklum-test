@@ -5,6 +5,7 @@ import "./style.scss";
 
 interface IProps {
     onClick: Function;
+    disabled?: boolean;
     primary?: boolean;
     secondary?: boolean;
 }
@@ -12,15 +13,17 @@ interface IProps {
 export class Button extends React.Component<IProps> {
     static defaultProps = {
         primary: false,
-        secondary: false
+        secondary: false,
+        disabled: false
     };
     render() {
-        const { children, onClick, primary, secondary } = this.props;
+        const { disabled, children, onClick, primary, secondary } = this.props;
         let className = "my-btn";
-        if (primary) className += " primary";
+        if (disabled) className += " disabled";
+        else if (primary) className += " primary";
         else if (secondary) className += " secondary";
         return (
-            <div className={className} onClick={(e) => onClick(e)}>
+            <div className={className} onClick={e => { if (!disabled) onClick(e); }}>
                 <Centered>{children}</Centered>
             </div>
         );
