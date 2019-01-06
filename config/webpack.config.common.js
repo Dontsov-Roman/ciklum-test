@@ -15,7 +15,7 @@ module.exports = {
     noParse: [/node_modules\/simple-dijs\/dist\/di.js/, /dtrace-provider/, /safe-json-stringify/, /mv/, /source-map-support/],
     rules: [
       { test: /\.(jsx|js)?$/, use: [{ loader: 'babel-loader' }] },
-      { test: /\.(tsx|ts)?$/, use: [{ loader: 'babel-loader' }, { loader: 'ts-loader' }] },
+      { test: /\.(tsx|ts)?$/, use: [{ loader: 'ts-loader' }] },
       { test: /^(?!.*\.spec\.js$).*\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/, loader: 'file-loader?name=assets/[name].[hash].[ext]' },
       {
@@ -30,7 +30,7 @@ module.exports = {
       },
             {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: ExtractTextPlugin.extract({ use: [ 'style-loader', 'css-loader' ]})
       },
       {
         test: /\.scss$/,

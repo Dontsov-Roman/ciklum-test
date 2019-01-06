@@ -9,7 +9,7 @@
     "sourceMap": true,
     "outDir": "ts-build",
     "allowJs": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "types": [ ],
     "lib": [
       "es2017",

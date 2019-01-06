@@ -1,6 +1,6 @@
 import * as React from "react";
 import { debounce } from "lodash";
-// import "./style.css";
+import "./style.scss";
 
 interface IProps {
     onChange: (text: string) => void;
