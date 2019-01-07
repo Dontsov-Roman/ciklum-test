@@ -8,6 +8,7 @@ import IStore from "../../redux/store";
 import { IParagraph } from "./repo";
 import withLoading from "../shared/hocs/withLoader";
 import withOnmount from "../shared/hocs/withOnmountRouter";
+import withEmptyScreen from "../shared/hocs/withEmptyScreen";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Text from "../../components/Text";
@@ -33,7 +34,7 @@ export class Paragraphs extends React.Component<IProps> {
                     <div key={`${paragraph.originalText}-${key}`}>
                         <Text>{paragraph.originalText}</Text>
                         <Input
-                            onChange={val => onChangeItem(key, { ...paragraph, usersText: val })}
+                            onChange={usersText => onChangeItem(key, { ...paragraph, usersText })}
                             timeout={500}
                             defaultValue={paragraph.usersText}
                         />
@@ -68,7 +69,9 @@ export default connect(
     withNamespaces()(
             withOnmount(
                 withLoading(
-                        Paragraphs
+                    withEmptyScreen("noParagraphs")(
+                            Paragraphs
+                        )
                     )
             )
         )

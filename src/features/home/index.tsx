@@ -1,6 +1,5 @@
 import * as React from "react";
 import { withNamespaces, WithNamespaces } from "react-i18next";
-import { connect } from "react-redux";
 import { RouteComponentProps, Link } from "react-router-dom";
 import Text from "../../components/Text";
 import Column from "../../components/Column";
@@ -12,7 +11,7 @@ class Home extends React.Component<WithNamespaces & RouteComponentProps> {
         return (
             <Text>
                 <Centered>
-                    <Column>
+                    <Column centered>
                         {t("welcome")}
                         <Link to="/fb">{t("paragraphs")}</Link>
                         <Link to="/fb/results">{t("suggestions")}</Link>

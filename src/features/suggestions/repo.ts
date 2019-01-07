@@ -3,15 +3,12 @@ import { stringify } from "query-string";
 import IRepository, { IParams, generalUrl } from "../../repository/IRepository";
 
 export interface ISuggestion {
+    id?: string | number;
     paragraphId: string | number;
     originalText: string;
     usersText: string;
     articleUrl?: string;
     isApproved?: boolean;
-}
-export interface IResponse {
-    suggestions: ISuggestion[];
-    title: string;
 }
 
 const repository: IRepository<ISuggestion> = {
@@ -21,12 +18,11 @@ const repository: IRepository<ISuggestion> = {
             if (params) {
                 url = `${url}?${stringify(params)}`;
             }
-            const { data: { suggestions }, status } = await axios.get<IResponse>(url);
-            const data: ISuggestion[] = [];
-            if (status < 400 && suggestions && suggestions.length) {
-                return suggestions;
+            const { data, status } = await axios.get<ISuggestion[]>(url);
+            if (status < 400 && data && data.length) {
+                return data;
             }
-            return data;
+            return [];
         } catch (e) {
             console.warn(e);
             return [];
@@ -36,14 +32,25 @@ const repository: IRepository<ISuggestion> = {
         return {} as ISuggestion;
     },
     remove: async (id) => {
-        return true;
+        try {
+            if (!id) return false;
+            const url: string = `${generalUrl}/suggestion/${id}`;
+            const { status } = await axios.delete(url);
+            if (status < 400) {
+                return true;
+            }
+            return false;
+        }
+        catch(e) {
+            console.warn(e);
+            return false;
+        }
     },
     create: async (suggestion) => {
         try {
             const url: string = `${generalUrl}/suggestion`;
             const {
-                data,
-                status
+                data
             } = await axios.post<ISuggestion>(url, suggestion);
             return data;
         }
@@ -52,8 +59,20 @@ const repository: IRepository<ISuggestion> = {
             return undefined;
         }
     },
-    update: async (suggestion) => {
-        return true;
+    update: async ({ id }) => {
+        try {
+            if (!id) return false;
+            const url: string = `${generalUrl}/suggestion/${id}`;
+            const { status } = await axios.put<boolean>(url);
+            if (status < 400) {
+                return true;
+            }
+            return false;
+        }
+        catch(e) {
+            console.warn(e);
+            return false;
+        }
     }
 };
 

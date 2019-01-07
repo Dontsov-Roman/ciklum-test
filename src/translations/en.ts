@@ -1,3 +1,10 @@
 export default {
-    hello: "Hello World!",
+    welcome: "Welcome to test project for Ciklum",
+    noItems: "No items",
+    noSuggestions: "No suggestions",
+    noParagrapsh: "No paragraphs",
+    send: "Send",
+    approve: "Approve",
+    reject: "Reject",
+    cancel: "Cancel"
 };

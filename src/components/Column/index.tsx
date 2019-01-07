@@ -1,9 +1,17 @@
 import * as React from "react";
 import "./style.scss";
 
-const Column: React.FunctionComponent<any> = ({ children }) => (
-    <div className="column">
-        {children}
-    </div>
-);
+interface IProps {
+    centered?: boolean;
+}
+
+const Column: React.FunctionComponent<IProps> = ({ children, centered }) => {
+    let className = "column";
+    if (centered) className += " centered";
+    return (
+        <div className={className}>
+            {children}
+        </div>
+    );
+};
 export default Column;

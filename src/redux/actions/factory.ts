@@ -11,6 +11,7 @@ export interface IFactoryAction<RepoItem> {
     removeByIdIndex: (id: string | number, index: number) => SimpleThunkAction;
     removeByIndex: (index: number) => SimpleThunkAction;
     updateByIndex: (index: number, item: RepoItem) => SimpleThunkAction;
+    updateAndSendToServer: (index: number, item: RepoItem) => SimpleThunkAction;
 }
 export interface IFactoryActionCreate<RepoItem> {
     create: (item: RepoItem) => SimpleThunkAction;
@@ -38,9 +39,8 @@ export const FactoryWithCreate =
             }
         });
 
-
 export default <RepoItem>(constants: IConstants, repository: IRepository<RepoItem>): IFactoryAction<RepoItem> => {
-    const getAll = (params) => async (dispatch, getState) => {
+    const getAll = (params?: IParams) => async (dispatch, getState) => {
         dispatch({
             type: constants.getAllRequest
         });
@@ -57,7 +57,7 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
             });
         }
     };
-    const getById = id => async (dispatch, getState) => {
+    const getById = (id: string | number) => async (dispatch, getState) => {
         dispatch({
             type: constants.getByIdRequest
         });
@@ -74,13 +74,13 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
             });
         }
     };
-    const removeByIndex = payload => async (dispatch) => {
+    const removeByIndex = (payload: number) => async (dispatch) => {
         dispatch({
             type: constants.removeByIndex,
             payload
         });
     };
-    const removeByIdIndex = (id, payload) => async (dispatch, getState) => {
+    const removeByIdIndex = (id: string | number, payload: number) => async (dispatch, getState) => {
         try {
             const success = await repository.remove(id);
             if (success)
@@ -90,18 +90,24 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
             console.warn(e);
         }
     };
-    const updateByIndex = (index, item) => async (dispatch, getState) => {
+    const updateByIndex = (index: number, item: RepoItem) => async (dispatch, getState) => {
         dispatch({
             type: constants.updateByIndex,
             payload: { item, index }
         });
     };
-    const action: IFactoryAction<RepoItem> = {
+    const updateAndSendToServer = (index: number, item: RepoItem) => async (dispatch, getState) => {
+        const success = await repository.update(item);
+        if (success) {
+            dispatch(updateByIndex(index, item));
+        }
+    };
+    return {
         getAll,
         getById,
         removeByIndex,
         removeByIdIndex,
-        updateByIndex
+        updateByIndex,
+        updateAndSendToServer
     };
-    return action;
 };

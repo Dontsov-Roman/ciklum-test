@@ -38,7 +38,7 @@ const repository: IRepository<IParagraph> = {
     getOne: async (id: string | number) => {
         return {} as IParagraph;
     },
-    remove: async (id: string | number) => {
+    remove: async (id) => {
         return true;
     }
 };

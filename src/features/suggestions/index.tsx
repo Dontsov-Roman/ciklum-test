@@ -7,9 +7,11 @@ import IStore from "../../redux/store";
 import { ISuggestion } from "./repo";
 import withLoading from "../shared/hocs/withLoader";
 import withOnmount from "../shared/hocs/withOnmount";
+import withEmptyScreen from "../shared/hocs/withEmptyScreen";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Text from "../../components/Text";
+import Row from "../../components/Row";
 
 interface IStoreProps {
     fetching: boolean;
@@ -18,30 +20,40 @@ interface IStoreProps {
 interface IStoreDispatchProps {
     onMount: (params: { url: string }) => void;
     onChangeItem: (index: number, item: ISuggestion) => void;
-    onSend: (item: ISuggestion, index: number) => void;
+    onApprove: (item: ISuggestion, index: number) => void;
+    onReject: (item: ISuggestion, index: number) => void;
 }
 type IProps = WithNamespaces & IStoreProps & IStoreDispatchProps & RouteComponentProps;
 
 export class Suggestions extends React.Component<IProps> {
     render() {
-        const { t, data, onChangeItem, onSend } = this.props;
+        const { t, data, onChangeItem, onApprove, onReject } = this.props;
         return (
             <div>
                 {data.map((suggestion, key) => (
-                    <div key={`${suggestion.originalText}-${key}`}>
+                    <div key={`${suggestion.id}-${suggestion.paragraphId}`}>
                         <Text>{suggestion.originalText}</Text>
                         <Input
-                            onChange={val => onChangeItem(key, { ...suggestion, usersText: val })}
+                            onChange={usersText => onChangeItem(key, { ...suggestion, usersText })}
                             timeout={500}
                             defaultValue={suggestion.usersText}
                         />
-                        <Button
-                            primary
-                            disabled={!suggestion.usersText || suggestion.usersText.length < 1}
-                            onClick={() => onSend( { ...suggestion, paragraphId: suggestion.paragraphId }, key )}
-                        >
-                            {t("send")}
-                        </Button>
+                        <Row>
+                            <Button
+                                primary
+                                disabled={suggestion.isApproved}
+                                onClick={() => onApprove( { ...suggestion, paragraphId: suggestion.paragraphId }, key )}
+                            >
+                                {t("approve")}
+                            </Button>
+                            <Button
+                                secondary
+                                disabled={suggestion.isApproved}
+                                onClick={() => onReject(suggestion, key)}
+                            >
+                                {t("reject")}
+                            </Button>
+                        </Row>
                     </div>
                 ))}
             </div>
@@ -50,32 +62,29 @@ export class Suggestions extends React.Component<IProps> {
 }
 
 export default connect(
-    (state: IStore): IStoreProps => {
-        console.warn(state);
-        return {
-            fetching: false,
-            data: []
-        };
-        // return {
-        //     fetching: state.suggestions.fetching,
-        //     data: state.suggestions.data.toArray()
-        // };
-    },
+    (state: IStore): IStoreProps => ({
+        fetching: state.suggestions.fetching,
+        data: state.suggestions.data.toArray()
+    }),
     (dispatch): IStoreDispatchProps => ({
         onMount: () => {
-            console.warn("SUggestions");
             dispatch(actions.getAll());
         },
         onChangeItem: (index, item) => dispatch(actions.updateByIndex(index, item)),
-        onSend: (item, index) => {
-            dispatch(actions.removeByIndex(index));
+        onApprove: (item, index) => {
+            dispatch(actions.updateAndSendToServer(index, { ...item, isApproved: true }));
+        },
+        onReject: (item, index) => {
+            dispatch(actions.removeByIdIndex(item.id, index));
         }
     })
 )(
     withNamespaces()(
             withOnmount(
                 withLoading(
-                        Suggestions
+                    withEmptyScreen("noSuggestions")(
+                            Suggestions
+                        )
                     )
             )
         )
