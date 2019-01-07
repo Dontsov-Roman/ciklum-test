@@ -18,17 +18,16 @@ interface IStoreProps {
 }
 interface IStoreDispatchProps {
     onMount: (params: { url: string }) => void;
-    onChangeItem: (index: number, item: ISuggestion) => void;
-    onApprove: (item: ISuggestion, index: number) => void;
+    onChangeItem: (item: ISuggestion) => void;
+    onApprove: (item: ISuggestion) => void;
     onApproveOwn: (item: ISuggestion) => void;
-    onReject: (item: ISuggestion, index: number) => void;
+    onReject: (item: ISuggestion) => void;
 }
 type IProps = IStoreProps & IStoreDispatchProps & RouteComponentProps;
 
 export class Suggestions extends React.Component<IProps> {
     render() {
         const { data, onChangeItem, onApprove, onReject, onApproveOwn } = this.props;
-        console.warn(data[0].data);
         return (
             <Column centered>
                 {data.map((article, key) => (
@@ -38,9 +37,9 @@ export class Suggestions extends React.Component<IProps> {
                             <Paragraph
                                 key={paragraph.paragraphId}
                                 paragraph={paragraph}
-                                onApprove={(suggestion) => onApprove(suggestion, key)}
-                                onReject={(suggestion) => onReject(suggestion, key)}
-                                onChangeItem={(suggestion) => onChangeItem(key, suggestion)}
+                                onApprove={onApprove}
+                                onReject={onReject}
+                                onChangeItem={(suggestion) => onChangeItem(suggestion)}
                                 onApproveOwn={onApproveOwn}
                             />
                         ))}
@@ -62,14 +61,10 @@ export default connect(
         onMount: () => {
             dispatch(actions.getAll());
         },
-        onChangeItem: (index, item) => undefined,
-        onApprove: (item, index) => {
-        },
-        onApproveOwn: item => {
-            console.warn(item);
-        },
-        onReject: (item, index) => {
-        }
+        onChangeItem: (item) => undefined,
+        onApprove: item => dispatch(actions.approveSuggestion(item)),
+        onApproveOwn: item => dispatch(actions.approveOwnSuggestion(item)),
+        onReject: item => dispatch(actions.rejectSuggestion(item)),
     })
 )(
     withOnmount(

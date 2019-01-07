@@ -92,12 +92,46 @@ const groupReducer = (
         data: articles
     };
 };
+
 const defaultReducer = Factory<IArticle, ISimpleState<IArticle>>(constants, initState);
 const createReducer = FactoryWithCreate<IArticle, ISimpleState<IArticle>>(constants, initState);
 export default (state: ISimpleState<IArticle> = initState, action: AnyAction) => {
     switch (action.type) {
         case constants.getAllSuccess:
             return groupReducer(state, action);
+        case constants.removeParagraph: {
+            const { paragraphId } = action.payload as IParagraph;
+            let articleIndex: number;
+            let newParagraphs: List<IParagraph>;
+            state.data.forEach((article, index) => {
+                newParagraphs = article.data.filter(paragraph => {
+                    if (paragraph.paragraphId === paragraphId) {
+                        articleIndex = index;
+                        return false;
+                    }
+                    return true;
+                });
+            });
+            if (articleIndex > -1) {
+                const newArticle = state.data.get(articleIndex);
+                newArticle.data = newParagraphs;
+
+                return {
+                    ...state,
+                    data: state.data.set(
+                        articleIndex,
+                        newArticle
+                    )
+                };
+            }
+            return state;
+        }
+        case constants.removeParagraph: {
+            const suggestion: ISuggestion = action.payload;
+            return {
+                ...state
+            };
+        }
         default: return createReducer(defaultReducer(state, action), action);
     }
 };
