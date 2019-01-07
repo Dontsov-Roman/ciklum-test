@@ -2,10 +2,10 @@ export interface IParams {
     [key: string]: any;
 }
 export const generalUrl = "http://localhost:3022/api";
-export default interface IRepository<T> {
+export default interface IRepository<T, C = any> {
     getAll: (params?: IParams) => Promise<T[]>;
     getOne: (id: string | number) => Promise<T>;
     remove: (id: string | number) => Promise<boolean>;
-    create?: (item: T) => Promise<T>;
+    create?: (item: T) => Promise<C>;
     update?: (item: T) => Promise<boolean>;
 }

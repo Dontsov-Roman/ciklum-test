@@ -95,6 +95,7 @@ const groupReducer = (
 
 const defaultReducer = Factory<IArticle, ISimpleState<IArticle>>(constants, initState);
 const createReducer = FactoryWithCreate<IArticle, ISimpleState<IArticle>>(constants, initState);
+
 export default (state: ISimpleState<IArticle> = initState, action: AnyAction) => {
     switch (action.type) {
         case constants.getAllSuccess:
@@ -126,11 +127,41 @@ export default (state: ISimpleState<IArticle> = initState, action: AnyAction) =>
             }
             return state;
         }
-        case constants.removeParagraph: {
-            const suggestion: ISuggestion = action.payload;
-            return {
-                ...state
-            };
+        case constants.rejectSuggestion: {
+            const { id } = action.payload as ISuggestion;
+            let articleIndex: number;
+            let paragraphIndex: number;
+            let newSuggestions: List<ISuggestion>;
+            state.data.forEach((article, index) => {
+                article.data.forEach((paragraph, pIndex) => {
+                    if (!articleIndex && !paragraphIndex) {
+                        newSuggestions = paragraph.data.filter(suggestion => {
+                            if (suggestion.id === id) {
+                                articleIndex = index;
+                                paragraphIndex = pIndex;
+                                return false;
+                            }
+                            return true;
+                        });
+                    }
+                });
+            });
+            if (articleIndex > -1 && paragraphIndex > -1) {
+                const newArticle = state.data.get(articleIndex);
+                const newParagraph = newArticle.data.get(paragraphIndex);
+                newParagraph.data = newSuggestions;
+                return {
+                    ...state,
+                    data: state.data.set(
+                        articleIndex,
+                        {
+                            ...newArticle,
+                            data: newArticle.data.set(paragraphIndex, newParagraph)
+                        }
+                    )
+                };
+            }
+            return state;
         }
         default: return createReducer(defaultReducer(state, action), action);
     }

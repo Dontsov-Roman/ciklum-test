@@ -28,7 +28,7 @@ class Paragraph extends React.Component<IProps, IState> {
         const { paragraph, onApprove, onReject, t, onApproveOwn } = this.props;
         const { showSuggestions, ownSuggestion } = this.state;
         return (
-            <Column key={paragraph.paragraphId}>
+            <Column>
                 <Text italic>{paragraph.originalText}</Text>
                 {showSuggestions && paragraph.data.map(suggestion => (
                     <Column key={suggestion.id}>
@@ -66,7 +66,7 @@ class Paragraph extends React.Component<IProps, IState> {
                         <Row>
                             <Button
                                 primary
-                                onClick={() => onApproveOwn({ ...paragraph, usersText: ownSuggestion})}
+                                onClick={() => onApproveOwn({ ...paragraph, usersText: ownSuggestion })}
                             >
                                 {t("approve")}
                             </Button>

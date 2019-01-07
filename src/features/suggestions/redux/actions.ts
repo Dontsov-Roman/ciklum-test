@@ -18,11 +18,19 @@ interface ISuggestionActions {
 const actions: IFactoryAction<ISuggestion> & IFactoryActionCreate<ISuggestion> & ISuggestionActions = {
     ...defaultAction,
     ...createActions,
-    rejectSuggestion: suggestion => (dispatch, getState) => {},
+    rejectSuggestion: suggestion => async (dispatch, getState) => {
+        await repo.remove(suggestion.id);
+        dispatch(defaultAction.getAll());
+    },
     approveSuggestion: suggestion => async (dispatch, getState) => {
         dispatch({ type: constants.removeParagraph, payload: suggestion });
         repo.update({ ...suggestion, isApproved: true });
     },
-    approveOwnSuggestion: suggestion => (dispatch, getState) => {},
+    approveOwnSuggestion: suggestion => async (dispatch, getState) => {
+        dispatch({ type: constants.removeParagraph, payload: suggestion });
+        await repo.removeByParagraphId(suggestion.paragraphId);
+        const { _id: id } = await repo.create(suggestion);
+        repo.update({ ...suggestion, isApproved: true, id });
+    },
 };
 export default actions;

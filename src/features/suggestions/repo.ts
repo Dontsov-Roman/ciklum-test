@@ -2,6 +2,17 @@ import axios from "axios";
 import { stringify } from "query-string";
 import IRepository, { IParams, generalUrl } from "../../repository/IRepository";
 
+interface ISuggestionOnCreate {
+    _id: string;
+    text: string;
+    paragraphId: string;
+    isApproved: boolean;
+}
+
+interface IRepositorySuggestion extends IRepository<ISuggestion, ISuggestionOnCreate> {
+    removeByParagraphId: (id: string | number) => Promise<boolean>;
+}
+
 export interface ISuggestion {
     id?: string | number;
     paragraphId: string | number;
@@ -11,7 +22,7 @@ export interface ISuggestion {
     isApproved?: boolean;
 }
 
-const repository: IRepository<ISuggestion> = {
+const repository: IRepositorySuggestion = {
     getAll: async (params?: IParams) => {
         try {
             let url: string = `${generalUrl}/suggestion`;
@@ -46,12 +57,27 @@ const repository: IRepository<ISuggestion> = {
             return false;
         }
     },
+    removeByParagraphId: async id => {
+        try {
+            if (!id) return false;
+            const url: string = `${generalUrl}/suggestions/${id}`;
+            const { status } = await axios.delete(url);
+            if (status < 400) {
+                return true;
+            }
+            return false;
+        }
+        catch(e) {
+            console.warn(e);
+            return false;
+        }
+    },
     create: async (suggestion) => {
         try {
             const url: string = `${generalUrl}/suggestion`;
             const {
                 data
-            } = await axios.post<ISuggestion>(url, suggestion);
+            } = await axios.post<ISuggestionOnCreate>(url, suggestion);
             return data;
         }
         catch(e) {

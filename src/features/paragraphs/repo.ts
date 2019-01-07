@@ -13,7 +13,7 @@ export interface IResponse {
     title: string;
 }
 
-const repository: IRepository<IParagraph> = {
+const repository: IRepository<IParagraph, IParagraph> = {
     getAll: async (params?: IParams) => {
         try {
             let url: string = `${generalUrl}/article`;

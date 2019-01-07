@@ -6,5 +6,7 @@ export default {
     send: "Send",
     approve: "Approve",
     reject: "Reject",
-    cancel: "Cancel"
+    cancel: "Cancel",
+    showUsersSuggestions: "Show users suggestions",
+    ownSuggestion: "Own suggestion"
 };
