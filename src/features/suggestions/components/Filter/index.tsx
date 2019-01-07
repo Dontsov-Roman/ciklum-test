@@ -48,6 +48,6 @@ export default connect(
     }),
     dispatch => ({
         onChange: () => dispatch(actions.toggleShowApproved()),
-        onApplyFilter: () => dispatch(actions.getAll()),
+        onApplyFilter: () => dispatch(actions.getAllWithoutLoader()),
     })
 )(withNamespaces()(Filter));
