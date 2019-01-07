@@ -13,6 +13,7 @@ interface IData<T> {
 
 export interface IParagraph extends IData<ISuggestion> {
     paragraphId: string | number;
+    articleUrl: string;
     originalText: string;
 }
 export { ISuggestion };
@@ -26,58 +27,74 @@ const initState: ISimpleState<IArticle> = {
     current: undefined,
     data: List<IArticle>()
 };
-const recursiveToArray = (data) => {
-    return data.map(d => {
-        const data = d.data && d.data.toArray ? d.data.toArray() : [];
-        return { ...d, data: { ...data, data: recursiveToArray(data.data) } };
-    });
+export const recursiveToArray = (list?: List<IData<any>>) => {
+    const arr = [];
+    if (list && list.forEach) {
+        list.forEach(d => {
+            const data = d.data && d.data.toArray ? d.data.toArray() : [];
+            data.forEach(d => {
+                if (d.data) {
+                    d.data = recursiveToArray(d.data);
+                }
+            });
+            arr.push({
+                ...d,
+                data
+            });
+        });
+    }
+    return arr;
 };
+
 const groupReducer = (
     state: ISimpleState<IArticle> = initState,
     action: Action<ISuggestion[]>
-): ISimpleState<IArticle> => {
-    let data = List<IArticle>();
+) => {
+    let articles = List<IArticle>();
+    let paragraphs = List<IParagraph>();
+    const uniqArticles = new Set<string>();
+    const uniqParagraphs = new Set<string | number>();
+    const uniqParagraphIdArticle = new Set<{articleUrl: string, parapgraphId: string | number }>();
     action.payload.map(suggestion => {
-        const articleIndex = data.findIndex(article => article.articleUrl === suggestion.articleUrl);
-        let article: IArticle = data.get(articleIndex);
-        let paragraph: IParagraph;
-        if (article) {
-            const paragraphIndex = article.data.findIndex(
-                paragraph => paragraph.paragraphId === suggestion.paragraphId
-            );
-            paragraph = article.data.get(paragraphIndex);
-            if (paragraph) {
-                const foundSuggestion = paragraph.data.find(({ id }) => id === suggestion.id);
-                if (!foundSuggestion) {
-                    paragraph.data = paragraph.data.push(suggestion);
-                    article = {
-                        ...article,
-                        data: article.data.set(paragraphIndex, paragraph)
-                    };
-                }
-            } else {
-                article = {
-                        ...article,
-                        data: article.data.push({
-                            paragraphId: suggestion.paragraphId,
-                            originalText: suggestion.originalText,
-                            data: List<ISuggestion>().push(suggestion)
-                        })
-                };
-            }
-            data = data.set(articleIndex, article);
-        } else {
-            data = data.push({
+        if (!uniqArticles.has(suggestion.articleUrl)) {
+            uniqArticles.add(suggestion.articleUrl);
+            articles = articles.push({
                 articleUrl: suggestion.articleUrl,
-                data: List<IParagraph>().push({
-                    paragraphId: suggestion.paragraphId,
-                    originalText: suggestion.originalText,
-                    data: List<ISuggestion>().push(suggestion)
-                })
+                data: List<IParagraph>()
             });
         }
+        if (!uniqParagraphs.has(suggestion.paragraphId)) {
+            uniqParagraphs.add(suggestion.paragraphId);
+            paragraphs = paragraphs.push({
+                paragraphId: suggestion.paragraphId,
+                originalText: suggestion.originalText,
+                articleUrl: suggestion.articleUrl,
+                data: List<ISuggestion>()
+            });
+        }
+        if (!uniqParagraphIdArticle.has({ articleUrl: suggestion.articleUrl, parapgraphId: suggestion.paragraphId })) {
+            uniqParagraphIdArticle.add({ articleUrl: suggestion.articleUrl, parapgraphId: suggestion.paragraphId });
+        }
     });
-    return { ...state, fetching: false, data };
+    action.payload.map(suggestion => {
+            paragraphs.forEach(paragraph => {
+                if (paragraph.paragraphId === suggestion.paragraphId) {
+                    paragraph.data = paragraph.data.push(suggestion);
+                }
+            });
+    });
+    paragraphs.forEach(paragraph => {
+        articles.forEach(article => {
+            if (article.articleUrl === paragraph.articleUrl) {
+                article.data = article.data.push(paragraph);
+            }
+        });
+    });
+    return {
+        ...state,
+        fetching: false,
+        data: articles
+    };
 };
 const defaultReducer = Factory<IArticle, ISimpleState<IArticle>>(constants, initState);
 const createReducer = FactoryWithCreate<IArticle, ISimpleState<IArticle>>(constants, initState);

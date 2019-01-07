@@ -9,7 +9,7 @@ import withOnmount from "../shared/hocs/withOnmount";
 import withEmptyScreen from "../shared/hocs/withEmptyScreen";
 import Text from "../../components/Text";
 import Column from "../../components/Column";
-import { IArticle } from "./redux/reducer";
+import { IArticle, recursiveToArray } from "./redux/reducer";
 import Paragraph from "./components/Paragraph";
 
 interface IStoreProps {
@@ -28,7 +28,7 @@ type IProps = IStoreProps & IStoreDispatchProps & RouteComponentProps;
 export class Suggestions extends React.Component<IProps> {
     render() {
         const { data, onChangeItem, onApprove, onReject, onApproveOwn } = this.props;
-        console.warn(data);
+        console.warn(data[0].data);
         return (
             <Column centered>
                 {data.map((article, key) => (
@@ -55,7 +55,7 @@ export default connect(
     (state: IStore): IStoreProps => {
         return {
             fetching: state.suggestions.fetching,
-            data: state.suggestions.data.toArray()
+            data: recursiveToArray(state.suggestions.data)
         };
     },
     (dispatch): IStoreDispatchProps => ({
