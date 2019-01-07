@@ -3,9 +3,8 @@ import { withNamespaces, WithNamespaces } from "react-i18next";
 import Button from "../../../../components/Button";
 import Input from "../../../../components/Input";
 import Text from "../../../../components/Text";
-import Row from "../../../../components/Row";
+import Row, { Justify } from "../../../../components/Row";
 import Column from "../../../../components/Column";
-import Paper from "../../../../components/Paper";
 import Divider from "../../../../components/Divider";
 import { IParagraph, ISuggestion } from "../../redux/reducer";
 
@@ -30,14 +29,14 @@ class Paragraph extends React.Component<IProps, IState> {
         const { paragraph, onApprove, onReject, t, onApproveOwn } = this.props;
         const { showSuggestions, ownSuggestion } = this.state;
         return (
-            <Column>
+            <Column justify={Justify.Center}>
                 <Text italic>{paragraph.originalText}</Text>
+                <Divider />
                 {showSuggestions &&
-                    <Column>
+                    <Column justify={Justify.Center}>
                         {paragraph.data.map((suggestion, index) => (
-                            <Paper key={suggestion.id}>
+                            <Column justify={Justify.Center} key={suggestion.id}>
                                 <Text>{suggestion.usersText}</Text>
-                                <Divider />
                                 <Row>
                                     <Button
                                         primary
@@ -54,7 +53,7 @@ class Paragraph extends React.Component<IProps, IState> {
                                         {t("reject")}
                                     </Button>
                                 </Row>
-                            </Paper>
+                            </Column>
                             ))
                         }
                         <Button onClick={() => this.setState({ showSuggestions: false })} >
@@ -63,7 +62,7 @@ class Paragraph extends React.Component<IProps, IState> {
                     </Column>
                 }
                 {!showSuggestions &&
-                    <Column>
+                    <Column justify={Justify.Center}>
                         <Input
                             onChange={ownSuggestion => this.setState({ ownSuggestion })}
                             timeout={500}

@@ -20,11 +20,14 @@ export { ISuggestion };
 export interface IArticle extends IData<IParagraph> {
     articleUrl: string;
 }
-
-const initState: ISimpleState<IArticle> = {
+export interface ISuggestionState extends ISimpleState<IArticle> {
+    showApproved: boolean;
+}
+const initState: ISuggestionState = {
     fetching: false,
     fetchingOne: false,
     current: undefined,
+    showApproved: false,
     data: List<IArticle>()
 };
 export const recursiveToArray = (list?: List<IData<any>>) => {
@@ -47,7 +50,7 @@ export const recursiveToArray = (list?: List<IData<any>>) => {
 };
 
 const groupReducer = (
-    state: ISimpleState<IArticle> = initState,
+    state: ISuggestionState = initState,
     action: Action<ISuggestion[]>
 ) => {
     let articles = List<IArticle>();
@@ -93,13 +96,19 @@ const groupReducer = (
     };
 };
 
-const defaultReducer = Factory<IArticle, ISimpleState<IArticle>>(constants, initState);
-const createReducer = FactoryWithCreate<IArticle, ISimpleState<IArticle>>(constants, initState);
+const defaultReducer = Factory<IArticle, ISuggestionState>(constants, initState);
+const createReducer = FactoryWithCreate<IArticle, ISuggestionState>(constants, initState);
 
-export default (state: ISimpleState<IArticle> = initState, action: AnyAction) => {
+export default (state: ISuggestionState = initState, action: AnyAction): ISuggestionState => {
     switch (action.type) {
         case constants.getAllSuccess:
             return groupReducer(state, action);
+        case constants.showApprovedToggle: {
+            return {
+                ...state,
+                showApproved: !state.showApproved
+            };
+        }
         case constants.removeParagraph: {
             const { paragraphId } = action.payload as IParagraph;
             let articleIndex: number;

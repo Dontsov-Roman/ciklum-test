@@ -4,25 +4,17 @@ import IProps from "./IProps";
 
 import "./style.scss";
 
-interface ITextAreaProps extends IProps {
-    rows?: number;
-    cols?: number;
-    wrap?: string;
-}
-export default class extends React.Component<ITextAreaProps> {
+export default class extends React.Component<IProps> {
     static defaultProps = {
         defaultValue: ""
     };
     onChange = debounce(this.props.onChange, this.props.timeout);
     render() {
-        const { defaultValue, style, rows, cols, wrap } = this.props;
+        const { defaultValue, style } = this.props;
         return (
-            <textarea
+            <input
                 style={style}
-                rows={rows}
-                cols={cols}
-                wrap={wrap}
-                className="my-textarea"
+                className="my-input"
                 onChange={(e) => this.onChange(e.target.value)}
                 defaultValue={defaultValue}
             />

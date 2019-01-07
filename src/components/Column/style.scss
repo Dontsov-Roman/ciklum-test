@@ -1,4 +1,17 @@
 .column {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    &.center {
+        align-items: center;
+    }
+    &.start {
+        align-items: start;
+    }
+    &.end {
+        align-items: end;
+    }
+    &.space-between {
+        align-items: space-between;
+    }
 }

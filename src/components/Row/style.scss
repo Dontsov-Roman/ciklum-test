@@ -1,7 +1,7 @@
 .row {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: center;
     &.center {
         justify-content: center;
     }
@@ -10,5 +10,8 @@
     }
     &.end {
         justify-content: end;
+    }
+    &.space-between {
+        justify-content: space-between;
     }
 }

@@ -8,5 +8,7 @@ export default {
     reject: "Reject",
     cancel: "Cancel",
     showUsersSuggestions: "Show users suggestions",
-    ownSuggestion: "Own suggestion"
+    ownSuggestion: "Own suggestion",
+    showApproved: "Show approved",
+    apply: "Apply"
 };

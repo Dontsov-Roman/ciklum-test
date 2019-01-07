@@ -3,31 +3,37 @@ import "./style.scss";
 export enum Justify {
     Center,
     Start,
-    End
+    End,
+    SpaceBetween
 }
 interface IProps {
     justify?: Justify;
+    style?: {};
 }
 
-const Row: React.FunctionComponent<IProps> = ({ children, justify }) => {
-    let className = "row";
+export const getClassNameByJustify = (justify: Justify): string => {
     switch(justify) {
         case Justify.Start: {
-            className += " start";
-            break;
+            return " start";
         }
         case Justify.End: {
-            className += " end";
-            break;
+            return " end";
+        }
+        case Justify.SpaceBetween: {
+            return " space-between";
         }
         case Justify.Center:
         default:
         {
-            className += " center";
+            return " center";
         }
     }
+};
+
+const Row: React.FunctionComponent<IProps> = ({ children, justify, style }) => {
+    const className = `row${getClassNameByJustify(justify)}`;
     return (
-        <div className={className}>
+        <div style={style} className={className}>
             {children}
         </div>
     );

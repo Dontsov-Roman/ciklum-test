@@ -1,9 +1,19 @@
 @import "../../../sass/main.scss";
 
+.my-input {
+	border-radius: $border-radius;
+	border: 1px solid #999;
+	padding: 5px;
+	height: 100%;
+	width: 100%;
+	font-size: 20px;
+}
 textarea {
 	outline: none;
 	-moz-appearance: none;
 	border: 1px solid #999;
+	padding: 5px;
+	font-size: 20px;
 }
 .my-textarea {
     resize: none;

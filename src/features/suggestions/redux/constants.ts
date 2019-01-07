@@ -2,6 +2,7 @@ import IConstants, { IConstantsCreate, IConstantsByIndex } from "../../../redux/
 interface IConstantsSuggestion {
     removeParagraph: string;
     rejectSuggestion: string;
+    showApprovedToggle: string;
 }
 const constants: IConstants & IConstantsCreate & IConstantsSuggestion = {
     getAllRequest: "SUGGESTIONS_GET_ALL_REQUEST",
@@ -14,6 +15,7 @@ const constants: IConstants & IConstantsCreate & IConstantsSuggestion = {
     createItemSuccess: "SUGGESTIONS_CREATE_ITEM_SUCCESS",
     createItemFail: "SUGGESTIONS_CREATE_ITEM_FAIL",
     removeParagraph: "SUGGESTIONS_REMOVE_PARAGRAPH",
-    rejectSuggestion: "SUGGESTIONS_REJECT_SUGGESTION"
+    rejectSuggestion: "SUGGESTIONS_REJECT_SUGGESTION",
+    showApprovedToggle: "SUGGESTIONS_SHOW_APPROVED_TOGGLE"
 };
 export default constants;

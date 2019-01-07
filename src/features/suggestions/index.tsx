@@ -13,6 +13,7 @@ import Row, { Justify } from "../../components/Row";
 import Paper from "../../components/Paper";
 import { IArticle, recursiveToArray } from "./redux/reducer";
 import Paragraph from "./components/Paragraph";
+import Filter from "./components/Filter";
 
 interface IStoreProps {
     fetching: boolean;
@@ -31,10 +32,11 @@ export class Suggestions extends React.Component<IProps> {
     render() {
         const { data, onChangeItem, onApprove, onReject, onApproveOwn } = this.props;
         return (
-            <Column centered>
+            <Column justify={Justify.Center}>
+                <Filter />
                 {data.map((article, key) => (
-                    <Column key={article.articleUrl}>
-                        <Row justify={Justify.Center}><Text bold>{article.articleUrl}</Text></Row>
+                    <Column justify={Justify.Center} key={article.articleUrl}>
+                        <Row><Text bold>{article.articleUrl}</Text></Row>
                         {article.data.map(paragraph => (
                             <Paper withShadow key={paragraph.paragraphId}>
                                 <Paragraph
