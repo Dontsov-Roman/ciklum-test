@@ -12,21 +12,24 @@ interface IProps extends WithNamespaces {
     onChangeItem: (suggestion: ISuggestion) => void;
     onApprove: (item: ISuggestion) => void;
     onReject: (item: ISuggestion) => void;
+    onApproveOwn: (item: ISuggestion) => void;
 }
 interface IState {
     showSuggestions: boolean;
+    ownSuggestion: string;
 }
 
 class Paragraph extends React.Component<IProps, IState> {
     state = {
-        showSuggestions: true
+        showSuggestions: true,
+        ownSuggestion: ""
     };
     render() {
-        const { paragraph, onApprove, onReject, onChangeItem, t } = this.props;
-        const { showSuggestions } = this.state;
+        const { paragraph, onApprove, onReject, t, onApproveOwn } = this.props;
+        const { showSuggestions, ownSuggestion } = this.state;
         return (
             <Column key={paragraph.paragraphId}>
-                <Text>{paragraph.originalText}</Text>
+                <Text italic>{paragraph.originalText}</Text>
                 {showSuggestions && paragraph.data.map(suggestion => (
                     <Column key={suggestion.id}>
                         <Text>{suggestion.usersText}</Text>
@@ -45,16 +48,34 @@ class Paragraph extends React.Component<IProps, IState> {
                             >
                                 {t("reject")}
                             </Button>
+                            <Button
+                                onClick={() => this.setState({ showSuggestions: false })}
+                            >
+                                {t("ownSuggestion")}
+                            </Button>
                         </Row>
                     </Column>
                 ))}
                 {!showSuggestions &&
                     <Column>
                         <Input
-                            onChange={usersText => onChangeItem({ ...paragraph, usersText })}
+                            onChange={ownSuggestion => this.setState({ ownSuggestion })}
                             timeout={500}
-                            defaultValue={paragraph.originalText}
+                            defaultValue={ownSuggestion}
                         />
+                        <Row>
+                            <Button
+                                primary
+                                onClick={() => onApproveOwn({ ...paragraph, usersText: ownSuggestion})}
+                            >
+                                {t("approve")}
+                            </Button>
+                            <Button
+                                onClick={() => this.setState({ showSuggestions: true })}
+                            >
+                                {t("showUsersSuggestions")}
+                            </Button>
+                        </Row>
                     </Column>
                 }
             </Column>

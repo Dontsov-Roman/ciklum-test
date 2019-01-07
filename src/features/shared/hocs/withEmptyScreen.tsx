@@ -5,19 +5,17 @@ import { withNamespaces, WithNamespaces } from "react-i18next";
 
 interface IProps extends WithNamespaces {
     data: any[];
-    emptyMessage?: string;
 }
-const withEmptyScreen = (emptyMessage?: string) => (Component: React.ComponentType<any & IProps>) =>
+const withEmptyScreen = (emptyMessage: string) => (Component: React.ComponentType<any & IProps>) =>
     class WithEmptyScreen extends React.Component<IProps> {
         static defaultProps = {
             data: [],
-            emptyMessage: "noItems"
         };
         render() {
-            const { data, emptyMessage } = this.props;
+            const { data, t } = this.props;
             return (
                 !data || data.length < 1
-                ? <Centered><Text>{emptyMessage}</Text></Centered>
+                ? <Centered><Text>{t(emptyMessage)}</Text></Centered>
                 : <Component {...this.props} />
             );
         }

@@ -20,18 +20,20 @@ interface IStoreDispatchProps {
     onMount: (params: { url: string }) => void;
     onChangeItem: (index: number, item: ISuggestion) => void;
     onApprove: (item: ISuggestion, index: number) => void;
+    onApproveOwn: (item: ISuggestion) => void;
     onReject: (item: ISuggestion, index: number) => void;
 }
 type IProps = IStoreProps & IStoreDispatchProps & RouteComponentProps;
 
 export class Suggestions extends React.Component<IProps> {
     render() {
-        const { data, onChangeItem, onApprove, onReject } = this.props;
+        const { data, onChangeItem, onApprove, onReject, onApproveOwn } = this.props;
+        console.warn(data);
         return (
             <Column centered>
                 {data.map((article, key) => (
                     <Column key={article.articleUrl}>
-                        <Text>{article.articleUrl}</Text>
+                        <Text bold>{article.articleUrl}</Text>
                         {article.data.map(paragraph => (
                             <Paragraph
                                 key={paragraph.paragraphId}
@@ -39,6 +41,7 @@ export class Suggestions extends React.Component<IProps> {
                                 onApprove={(suggestion) => onApprove(suggestion, key)}
                                 onReject={(suggestion) => onReject(suggestion, key)}
                                 onChangeItem={(suggestion) => onChangeItem(key, suggestion)}
+                                onApproveOwn={onApproveOwn}
                             />
                         ))}
                     </Column>
@@ -49,10 +52,12 @@ export class Suggestions extends React.Component<IProps> {
 }
 
 export default connect(
-    (state: IStore): IStoreProps => ({
-        fetching: state.suggestions.fetching,
-        data: state.suggestions.data.toArray()
-    }),
+    (state: IStore): IStoreProps => {
+        return {
+            fetching: state.suggestions.fetching,
+            data: state.suggestions.data.toArray()
+        };
+    },
     (dispatch): IStoreDispatchProps => ({
         onMount: () => {
             dispatch(actions.getAll());
@@ -61,6 +66,9 @@ export default connect(
         onApprove: (item, index) => {
             dispatch(actions.updateAndSendToServer(index, { ...item, isApproved: true }));
             dispatch(actions.removeByIndex(index));
+        },
+        onApproveOwn: item => {
+            console.warn(item);
         },
         onReject: (item, index) => {
             dispatch(actions.removeByIdIndex(item.id, index));

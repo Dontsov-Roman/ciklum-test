@@ -7,16 +7,17 @@ import { AnyAction } from "redux/lib/redux";
 interface Action<Payload> extends AnyAction {
     payload: Payload;
 }
+interface IData<T> {
+    data: List<T>;
+}
 
-export interface IParagraph {
+export interface IParagraph extends IData<ISuggestion> {
     paragraphId: string | number;
     originalText: string;
-    data: List<ISuggestion>;
 }
 export { ISuggestion };
-export interface IArticle {
+export interface IArticle extends IData<IParagraph> {
     articleUrl: string;
-    data: List<IParagraph>;
 }
 
 const initState: ISimpleState<IArticle> = {
@@ -25,6 +26,12 @@ const initState: ISimpleState<IArticle> = {
     current: undefined,
     data: List<IArticle>()
 };
+const recursiveToArray = (data) => {
+    return data.map(d => {
+        const data = d.data && d.data.toArray ? d.data.toArray() : [];
+        return { ...d, data: { ...data, data: recursiveToArray(data.data) } };
+    });
+};
 const groupReducer = (
     state: ISimpleState<IArticle> = initState,
     action: Action<ISuggestion[]>
@@ -32,15 +39,22 @@ const groupReducer = (
     let data = List<IArticle>();
     action.payload.map(suggestion => {
         const articleIndex = data.findIndex(article => article.articleUrl === suggestion.articleUrl);
-        let article: IArticle = data[articleIndex];
-        let paragpraph: IParagraph;
+        let article: IArticle = data.get(articleIndex);
+        let paragraph: IParagraph;
         if (article) {
-            paragpraph = article.data.find(
-                paragpraph => paragpraph.paragraphId === suggestion.paragraphId
+            const paragraphIndex = article.data.findIndex(
+                paragraph => paragraph.paragraphId === suggestion.paragraphId
             );
-            if (paragpraph) {
-                const foundSuggestion = paragpraph.data.find(({ id }) => id === suggestion.id);
-                if (!foundSuggestion) paragpraph.data = paragpraph.data.push(suggestion);
+            paragraph = article.data.get(paragraphIndex);
+            if (paragraph) {
+                const foundSuggestion = paragraph.data.find(({ id }) => id === suggestion.id);
+                if (!foundSuggestion) {
+                    paragraph.data = paragraph.data.push(suggestion);
+                    article = {
+                        ...article,
+                        data: article.data.set(paragraphIndex, paragraph)
+                    };
+                }
             } else {
                 article = {
                         ...article,
@@ -50,8 +64,8 @@ const groupReducer = (
                             data: List<ISuggestion>().push(suggestion)
                         })
                 };
-                data = data.set(articleIndex, article);
             }
+            data = data.set(articleIndex, article);
         } else {
             data = data.push({
                 articleUrl: suggestion.articleUrl,
