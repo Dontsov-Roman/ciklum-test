@@ -1,8 +1,8 @@
 import { ISimpleState } from "./reducers/factory";
 import { IParagraph } from "../features/paragraphs/repo";
-import { ISuggestion } from "../features/suggestions/repo";
+import { IArticle } from "../features/suggestions/redux/reducer";
 
 export default interface IStore {
     paragraphs: ISimpleState<IParagraph>;
-    suggestions: ISimpleState<ISuggestion>;
+    suggestions: ISimpleState<IArticle>;
 }

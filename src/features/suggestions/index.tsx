@@ -1,5 +1,4 @@
 import * as React from "react";
-import { withNamespaces, WithNamespaces } from "react-i18next";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 import actions from "./redux/actions";
@@ -8,14 +7,14 @@ import { ISuggestion } from "./repo";
 import withLoading from "../shared/hocs/withLoader";
 import withOnmount from "../shared/hocs/withOnmount";
 import withEmptyScreen from "../shared/hocs/withEmptyScreen";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
 import Text from "../../components/Text";
-import Row from "../../components/Row";
+import Column from "../../components/Column";
+import { IArticle } from "./redux/reducer";
+import Paragraph from "./components/Paragraph";
 
 interface IStoreProps {
     fetching: boolean;
-    data: ISuggestion[];
+    data: IArticle[];
 }
 interface IStoreDispatchProps {
     onMount: (params: { url: string }) => void;
@@ -23,40 +22,28 @@ interface IStoreDispatchProps {
     onApprove: (item: ISuggestion, index: number) => void;
     onReject: (item: ISuggestion, index: number) => void;
 }
-type IProps = WithNamespaces & IStoreProps & IStoreDispatchProps & RouteComponentProps;
+type IProps = IStoreProps & IStoreDispatchProps & RouteComponentProps;
 
 export class Suggestions extends React.Component<IProps> {
     render() {
-        const { t, data, onChangeItem, onApprove, onReject } = this.props;
+        const { data, onChangeItem, onApprove, onReject } = this.props;
         return (
-            <div>
-                {data.map((suggestion, key) => (
-                    <div key={`${suggestion.id}-${suggestion.paragraphId}`}>
-                        <Text>{suggestion.originalText}</Text>
-                        <Input
-                            onChange={usersText => onChangeItem(key, { ...suggestion, usersText })}
-                            timeout={500}
-                            defaultValue={suggestion.usersText}
-                        />
-                        <Row>
-                            <Button
-                                primary
-                                disabled={suggestion.isApproved}
-                                onClick={() => onApprove( { ...suggestion, paragraphId: suggestion.paragraphId }, key )}
-                            >
-                                {t("approve")}
-                            </Button>
-                            <Button
-                                secondary
-                                disabled={suggestion.isApproved}
-                                onClick={() => onReject(suggestion, key)}
-                            >
-                                {t("reject")}
-                            </Button>
-                        </Row>
-                    </div>
+            <Column centered>
+                {data.map((article, key) => (
+                    <Column key={article.articleUrl}>
+                        <Text>{article.articleUrl}</Text>
+                        {article.data.map(paragraph => (
+                            <Paragraph
+                                key={paragraph.paragraphId}
+                                paragraph={paragraph}
+                                onApprove={(suggestion) => onApprove(suggestion, key)}
+                                onReject={(suggestion) => onReject(suggestion, key)}
+                                onChangeItem={(suggestion) => onChangeItem(key, suggestion)}
+                            />
+                        ))}
+                    </Column>
                 ))}
-            </div>
+            </Column>
         );
     }
 }
@@ -73,19 +60,18 @@ export default connect(
         onChangeItem: (index, item) => dispatch(actions.updateByIndex(index, item)),
         onApprove: (item, index) => {
             dispatch(actions.updateAndSendToServer(index, { ...item, isApproved: true }));
+            dispatch(actions.removeByIndex(index));
         },
         onReject: (item, index) => {
             dispatch(actions.removeByIdIndex(item.id, index));
         }
     })
 )(
-    withNamespaces()(
-            withOnmount(
-                withLoading(
-                    withEmptyScreen("noSuggestions")(
-                            Suggestions
-                        )
-                    )
+    withOnmount(
+        withLoading(
+            withEmptyScreen("noSuggestions")(
+                    Suggestions
+                )
             )
-        )
-    );
+    )
+);
