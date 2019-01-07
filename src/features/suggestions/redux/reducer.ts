@@ -54,7 +54,6 @@ const groupReducer = (
     let paragraphs = List<IParagraph>();
     const uniqArticles = new Set<string>();
     const uniqParagraphs = new Set<string | number>();
-    const uniqParagraphIdArticle = new Set<{articleUrl: string, parapgraphId: string | number }>();
     action.payload.map(suggestion => {
         if (!uniqArticles.has(suggestion.articleUrl)) {
             uniqArticles.add(suggestion.articleUrl);
@@ -71,9 +70,6 @@ const groupReducer = (
                 articleUrl: suggestion.articleUrl,
                 data: List<ISuggestion>()
             });
-        }
-        if (!uniqParagraphIdArticle.has({ articleUrl: suggestion.articleUrl, parapgraphId: suggestion.paragraphId })) {
-            uniqParagraphIdArticle.add({ articleUrl: suggestion.articleUrl, parapgraphId: suggestion.paragraphId });
         }
     });
     action.payload.map(suggestion => {

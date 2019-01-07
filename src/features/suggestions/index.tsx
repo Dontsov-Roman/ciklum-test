@@ -62,16 +62,13 @@ export default connect(
         onMount: () => {
             dispatch(actions.getAll());
         },
-        onChangeItem: (index, item) => dispatch(actions.updateByIndex(index, item)),
+        onChangeItem: (index, item) => undefined,
         onApprove: (item, index) => {
-            dispatch(actions.updateAndSendToServer(index, { ...item, isApproved: true }));
-            dispatch(actions.removeByIndex(index));
         },
         onApproveOwn: item => {
             console.warn(item);
         },
         onReject: (item, index) => {
-            dispatch(actions.removeByIdIndex(item.id, index));
         }
     })
 )(

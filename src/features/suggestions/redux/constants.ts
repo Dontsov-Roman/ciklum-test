@@ -1,5 +1,5 @@
-import IConstants, { IConstantsCreate } from "../../../redux/constants";
-const constants: IConstants & IConstantsCreate = {
+import IConstants, { IConstantsCreate, IConstantsByIndex } from "../../../redux/constants";
+const constants: IConstants & IConstantsCreate & IConstantsByIndex = {
     getAllRequest: "SUGGESTIONS_GET_ALL_REQUEST",
     getAllSuccess: "SUGGESTIONS_GET_ALL_SUCCESS",
     getAllFail: "SUGGESTIONS_GET_ALL_FAIL",

@@ -5,8 +5,11 @@ export default interface IConstants {
     getByIdRequest: string;
     getByIdSuccess: string;
     getByIdFail: string;
+}
+
+export interface IConstantsByIndex {
     updateByIndex: string;
-    removeByIndex?: string;
+    removeByIndex: string;
 }
 
 export interface IConstantsCreate {

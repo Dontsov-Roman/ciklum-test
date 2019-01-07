@@ -1,5 +1,5 @@
-import IConstants from "../../../redux/constants";
-const constants: IConstants = {
+import IConstants, { IConstantsByIndex } from "../../../redux/constants";
+const constants: IConstants & IConstantsByIndex = {
     getAllRequest: "PARAGRAPHS_GET_ALL_REQUEST",
     getAllSuccess: "PARAGRAPHS_GET_ALL_SUCCESS",
     getAllFail: "PARAGRAPHS_GET_ALL_FAIL",

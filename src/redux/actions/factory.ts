@@ -1,5 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import IConstants, { IConstantsCreate } from "../constants";
+import IConstants, { IConstantsCreate, IConstantsByIndex } from "../constants";
 import IRepository, { IParams } from "../../repository/IRepository";
 import IStore from "../store";
 
@@ -8,6 +8,8 @@ export type SimpleThunkAction = ThunkAction<void, IStore, any, any>;
 export interface IFactoryAction<RepoItem> {
     getAll: (params?: IParams) => SimpleThunkAction;
     getById: (id: string | number) => SimpleThunkAction;
+}
+export interface IFactoryByIndex<RepoItem> {
     removeByIdIndex: (id: string | number, index: number) => SimpleThunkAction;
     removeByIndex: (index: number) => SimpleThunkAction;
     updateByIndex: (index: number, item: RepoItem) => SimpleThunkAction;
@@ -38,7 +40,44 @@ export const FactoryWithCreate =
                 }
             }
         });
-
+export const FactoryByIndex =
+    <RepoItem>(constants: IConstantsByIndex, repository: IRepository<RepoItem>)
+        : IFactoryByIndex<RepoItem> => {
+            const removeByIndex = (payload: number) => async (dispatch) => {
+                dispatch({
+                    type: constants.removeByIndex,
+                    payload
+                });
+            };
+            const removeByIdIndex = (id: string | number, payload: number) => async (dispatch, getState) => {
+                try {
+                    const success = await repository.remove(id);
+                    if (success)
+                        dispatch(removeByIndex(payload));
+                }
+                catch (e) {
+                    console.warn(e);
+                }
+            };
+            const updateByIndex = (index: number, item: RepoItem) => async (dispatch, getState) => {
+                dispatch({
+                    type: constants.updateByIndex,
+                    payload: { item, index }
+                });
+            };
+            const updateAndSendToServer = (index: number, item: RepoItem) => async (dispatch, getState) => {
+                const success = await repository.update(item);
+                if (success) {
+                    dispatch(updateByIndex(index, item));
+                }
+            };
+            return {
+                removeByIndex,
+                removeByIdIndex,
+                updateByIndex,
+                updateAndSendToServer
+            };
+    };
 export default <RepoItem>(constants: IConstants, repository: IRepository<RepoItem>): IFactoryAction<RepoItem> => {
     const getAll = (params?: IParams) => async (dispatch, getState) => {
         dispatch({
@@ -74,40 +113,9 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
             });
         }
     };
-    const removeByIndex = (payload: number) => async (dispatch) => {
-        dispatch({
-            type: constants.removeByIndex,
-            payload
-        });
-    };
-    const removeByIdIndex = (id: string | number, payload: number) => async (dispatch, getState) => {
-        try {
-            const success = await repository.remove(id);
-            if (success)
-                dispatch(removeByIndex(payload));
-        }
-        catch (e) {
-            console.warn(e);
-        }
-    };
-    const updateByIndex = (index: number, item: RepoItem) => async (dispatch, getState) => {
-        dispatch({
-            type: constants.updateByIndex,
-            payload: { item, index }
-        });
-    };
-    const updateAndSendToServer = (index: number, item: RepoItem) => async (dispatch, getState) => {
-        const success = await repository.update(item);
-        if (success) {
-            dispatch(updateByIndex(index, item));
-        }
-    };
+
     return {
         getAll,
         getById,
-        removeByIndex,
-        removeByIdIndex,
-        updateByIndex,
-        updateAndSendToServer
     };
 };

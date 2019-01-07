@@ -1,4 +1,4 @@
-import IConstants, { IConstantsCreate } from "../constants";
+import IConstants, { IConstantsCreate, IConstantsByIndex } from "../constants";
 import { Reducer, AnyAction } from "redux/lib/redux";
 import { List } from "immutable";
 
@@ -21,6 +21,27 @@ export const FactoryWithCreate = <Item, State extends ISimpleState<Item>>
             }
             case constants.createItemSuccess: {
                 return { ...state, fetchingOne: false, data: state.data.push(action.payload) };
+            }
+            default: return state;
+        }
+    };
+
+export const FactoryByIndex = <Item, State extends ISimpleState<Item>>
+    (constants: IConstantsByIndex, initState: State): Reducer<State, AnyAction> =>
+    (state: State = initState, action: AnyAction): State => {
+        switch(action.type) {
+            case constants.updateByIndex: {
+                const { index, item } = action.payload;
+                return {
+                    ...state,
+                    data: state.data.update(index, () => item)
+                };
+            }
+            case constants.removeByIndex: {
+                return {
+                    ...state,
+                    data: state.data.delete(action.payload)
+                };
             }
             default: return state;
         }
@@ -67,19 +88,6 @@ export default <Item, State extends ISimpleState<Item>>
                     ...state,
                     fetchingOne: false,
                     current: undefined
-                };
-            }
-            case constants.updateByIndex: {
-                const { index, item } = action.payload;
-                return {
-                    ...state,
-                    data: state.data.update(index, () => item)
-                };
-            }
-            case constants.removeByIndex: {
-                return {
-                    ...state,
-                    data: state.data.delete(action.payload)
                 };
             }
             default: return state;
