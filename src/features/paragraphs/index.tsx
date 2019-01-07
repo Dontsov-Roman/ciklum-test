@@ -12,6 +12,7 @@ import withEmptyScreen from "../shared/hocs/withEmptyScreen";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Text from "../../components/Text";
+import Paper from "../../components/Paper";
 import { ISuggestion } from "../suggestions/repo";
 
 interface IStoreProps {
@@ -31,7 +32,7 @@ export class Paragraphs extends React.Component<IProps> {
         return (
             <div>
                 {data.map((paragraph, key) => (
-                    <div key={`${paragraph.originalText}-${key}`}>
+                    <Paper withShadow key={`${paragraph.originalText}-${key}`}>
                         <Text>{paragraph.originalText}</Text>
                         <Input
                             onChange={usersText => onChangeItem(key, { ...paragraph, usersText })}
@@ -45,7 +46,7 @@ export class Paragraphs extends React.Component<IProps> {
                         >
                             {t("send")}
                         </Button>
-                    </div>
+                    </Paper>
                 ))}
             </div>
         );

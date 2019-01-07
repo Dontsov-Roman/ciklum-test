@@ -5,6 +5,8 @@ import Input from "../../../../components/Input";
 import Text from "../../../../components/Text";
 import Row from "../../../../components/Row";
 import Column from "../../../../components/Column";
+import Paper from "../../../../components/Paper";
+import Divider from "../../../../components/Divider";
 import { IParagraph, ISuggestion } from "../../redux/reducer";
 
 interface IProps extends WithNamespaces {
@@ -30,32 +32,36 @@ class Paragraph extends React.Component<IProps, IState> {
         return (
             <Column>
                 <Text italic>{paragraph.originalText}</Text>
-                {showSuggestions && paragraph.data.map(suggestion => (
-                    <Column key={suggestion.id}>
-                        <Text>{suggestion.usersText}</Text>
-                        <Row>
-                            <Button
-                                primary
-                                disabled={suggestion.isApproved}
-                                onClick={() => onApprove(suggestion)}
-                            >
-                                {t("approve")}
-                            </Button>
-                            <Button
-                                secondary
-                                disabled={suggestion.isApproved}
-                                onClick={() => onReject(suggestion)}
-                            >
-                                {t("reject")}
-                            </Button>
-                            <Button
-                                onClick={() => this.setState({ showSuggestions: false })}
-                            >
-                                {t("ownSuggestion")}
-                            </Button>
-                        </Row>
+                {showSuggestions &&
+                    <Column>
+                        {paragraph.data.map((suggestion, index) => (
+                            <Paper key={suggestion.id}>
+                                <Text>{suggestion.usersText}</Text>
+                                <Divider />
+                                <Row>
+                                    <Button
+                                        primary
+                                        disabled={suggestion.isApproved}
+                                        onClick={() => onApprove(suggestion)}
+                                    >
+                                        {t("approve")}
+                                    </Button>
+                                    <Button
+                                        secondary
+                                        disabled={suggestion.isApproved}
+                                        onClick={() => onReject(suggestion)}
+                                    >
+                                        {t("reject")}
+                                    </Button>
+                                </Row>
+                            </Paper>
+                            ))
+                        }
+                        <Button onClick={() => this.setState({ showSuggestions: false })} >
+                            {t("ownSuggestion")}
+                        </Button>
                     </Column>
-                ))}
+                }
                 {!showSuggestions &&
                     <Column>
                         <Input

@@ -9,6 +9,8 @@ import withOnmount from "../shared/hocs/withOnmount";
 import withEmptyScreen from "../shared/hocs/withEmptyScreen";
 import Text from "../../components/Text";
 import Column from "../../components/Column";
+import Row, { Justify } from "../../components/Row";
+import Paper from "../../components/Paper";
 import { IArticle, recursiveToArray } from "./redux/reducer";
 import Paragraph from "./components/Paragraph";
 
@@ -32,16 +34,17 @@ export class Suggestions extends React.Component<IProps> {
             <Column centered>
                 {data.map((article, key) => (
                     <Column key={article.articleUrl}>
-                        <Text bold>{article.articleUrl}</Text>
+                        <Row justify={Justify.Center}><Text bold>{article.articleUrl}</Text></Row>
                         {article.data.map(paragraph => (
-                            <Paragraph
-                                key={paragraph.paragraphId}
-                                paragraph={paragraph}
-                                onApprove={onApprove}
-                                onReject={onReject}
-                                onChangeItem={(suggestion) => onChangeItem(suggestion)}
-                                onApproveOwn={onApproveOwn}
-                            />
+                            <Paper withShadow key={paragraph.paragraphId}>
+                                <Paragraph
+                                    paragraph={paragraph}
+                                    onApprove={onApprove}
+                                    onReject={onReject}
+                                    onChangeItem={(suggestion) => onChangeItem(suggestion)}
+                                    onApproveOwn={onApproveOwn}
+                                />
+                            </Paper>
                         ))}
                     </Column>
                 ))}
