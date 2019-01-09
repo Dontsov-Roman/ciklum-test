@@ -8,44 +8,26 @@ import Factory, {
 } from "../../../redux/actions/factory";
 import repo, { ISuggestion } from "../repo";
 import { IParams } from "../../../repository/IRepository";
-import IStore from "../../../redux/store";
 
 export const defaultAction = Factory<ISuggestion>(constants, repo);
 export const createActions = FactoryWithCreate<ISuggestion>(constants, repo);
-interface ISuggestionActions {
+
+interface ISuggestionActions extends IFactoryAction<ISuggestion>, IFactoryActionCreate<ISuggestion> {
     rejectSuggestion: (suggestion: ISuggestion) => SimpleThunkAction;
     approveSuggestion: (suggestion: ISuggestion) => SimpleThunkAction;
     approveOwnSuggestion: (suggestion: ISuggestion) => SimpleThunkAction;
     getAllWithoutLoader: (params?: IParams) => SimpleThunkAction;
     toggleShowApproved: () => Action;
+    changeSearchText: (searchText: string) => Action;
 }
-const getAllWithoutLoader = (params?: IParams) => async(dispatch, getState) => {
-    try {
-        const { suggestions: { showApproved } }: IStore = getState();
-        const payload = await repo.getAll({ ...params, showApproved });
-        dispatch({
-            type: constants.getAllSuccess,
-            payload
-        });
-    }
-    catch(e) {
-        dispatch({
-            type: constants.getAllFail
-        });
-    }
-};
-const actions: IFactoryAction<ISuggestion> & IFactoryActionCreate<ISuggestion> & ISuggestionActions = {
+
+const changeSearchText = (payload: string) => ({ type: constants.changeSearchText, payload });
+const actions: ISuggestionActions = {
     ...defaultAction,
     ...createActions,
-    getAll: (params?: IParams) => async(dispatch, getState) => {
-        dispatch({
-            type: constants.getAllRequest
-        });
-        dispatch(getAllWithoutLoader(params));
-    },
     rejectSuggestion: suggestion => async (dispatch, getState) => {
         await repo.remove(suggestion.id);
-        dispatch(getAllWithoutLoader());
+        dispatch(defaultAction.getAllWithoutLoader());
     },
     approveSuggestion: suggestion => async (dispatch, getState) => {
         dispatch({ type: constants.removeParagraph, payload: suggestion });
@@ -58,6 +40,6 @@ const actions: IFactoryAction<ISuggestion> & IFactoryActionCreate<ISuggestion> &
         repo.update({ ...suggestion, isApproved: true, id });
     },
     toggleShowApproved: () => ({ type: constants.showApprovedToggle }),
-    getAllWithoutLoader
+    changeSearchText
 };
 export default actions;

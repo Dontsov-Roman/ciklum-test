@@ -3,6 +3,7 @@ interface IConstantsSuggestion {
     removeParagraph: string;
     rejectSuggestion: string;
     showApprovedToggle: string;
+    changeSearchText: string;
 }
 const constants: IConstants & IConstantsCreate & IConstantsSuggestion = {
     getAllRequest: "SUGGESTIONS_GET_ALL_REQUEST",
@@ -16,6 +17,7 @@ const constants: IConstants & IConstantsCreate & IConstantsSuggestion = {
     createItemFail: "SUGGESTIONS_CREATE_ITEM_FAIL",
     removeParagraph: "SUGGESTIONS_REMOVE_PARAGRAPH",
     rejectSuggestion: "SUGGESTIONS_REJECT_SUGGESTION",
-    showApprovedToggle: "SUGGESTIONS_SHOW_APPROVED_TOGGLE"
+    showApprovedToggle: "SUGGESTIONS_SHOW_APPROVED_TOGGLE",
+    changeSearchText: "SUGGESTIONS_CHANGE_SEARCH_TEXT"
 };
 export default constants;

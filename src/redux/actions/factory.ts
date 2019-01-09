@@ -6,6 +6,7 @@ import IStore from "../store";
 export type SimpleThunkAction = ThunkAction<void, IStore, any, any>;
 
 export interface IFactoryAction<RepoItem> {
+    getAllWithoutLoader: (params?: IParams) => SimpleThunkAction;
     getAll: (params?: IParams) => SimpleThunkAction;
     getById: (id: string | number) => SimpleThunkAction;
 }
@@ -79,12 +80,10 @@ export const FactoryByIndex =
             };
     };
 export default <RepoItem>(constants: IConstants, repository: IRepository<RepoItem>): IFactoryAction<RepoItem> => {
-    const getAll = (params?: IParams) => async (dispatch, getState) => {
-        dispatch({
-            type: constants.getAllRequest
-        });
+    const getAllWithoutLoader = (params?: IParams) => async(dispatch, getState) => {
         try {
-            const payload = await repository.getAll(params);
+            const { suggestions: { showApproved } }: IStore = getState();
+            const payload = await repository.getAll({ ...params, showApproved });
             dispatch({
                 type: constants.getAllSuccess,
                 payload
@@ -95,6 +94,12 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
                 type: constants.getAllFail
             });
         }
+    };
+    const getAll = (params?: IParams) => async (dispatch, getState) => {
+        dispatch({
+            type: constants.getAllRequest
+        });
+        dispatch(getAllWithoutLoader(params));
     };
     const getById = (id: string | number) => async (dispatch, getState) => {
         dispatch({
@@ -115,6 +120,7 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
     };
 
     return {
+        getAllWithoutLoader,
         getAll,
         getById,
     };

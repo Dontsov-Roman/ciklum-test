@@ -22,12 +22,14 @@ export interface IArticle extends IData<IParagraph> {
 }
 export interface ISuggestionState extends ISimpleState<IArticle> {
     showApproved: boolean;
+    searchText: string;
 }
 const initState: ISuggestionState = {
     fetching: false,
     fetchingOne: false,
     current: undefined,
     showApproved: false,
+    searchText: "",
     data: List<IArticle>()
 };
 export const recursiveToArray = (list?: List<IData<any>>) => {
@@ -57,6 +59,7 @@ const groupReducer = (
     let paragraphs = List<IParagraph>();
     const uniqArticles = new Set<string>();
     const uniqParagraphs = new Set<string | number>();
+    const { searchText } = state;
     action.payload.map(suggestion => {
         if (!uniqArticles.has(suggestion.articleUrl)) {
             uniqArticles.add(suggestion.articleUrl);
@@ -77,14 +80,19 @@ const groupReducer = (
     });
     action.payload.map(suggestion => {
             paragraphs.forEach(paragraph => {
-                if (paragraph.paragraphId === suggestion.paragraphId) {
+                if (
+                    paragraph.paragraphId === suggestion.paragraphId
+                ) {
                     paragraph.data = paragraph.data.push(suggestion);
                 }
             });
     });
     paragraphs.forEach(paragraph => {
         articles.forEach(article => {
-            if (article.articleUrl === paragraph.articleUrl) {
+            if (
+                article.articleUrl === paragraph.articleUrl &&
+                paragraph.originalText.search(searchText) > -1
+            ) {
                 article.data = article.data.push(paragraph);
             }
         });
@@ -108,6 +116,9 @@ export default (state: ISuggestionState = initState, action: AnyAction): ISugges
                 ...state,
                 showApproved: !state.showApproved
             };
+        }
+        case constants.changeSearchText: {
+            return { ...state, searchText: action.payload };
         }
         case constants.removeParagraph: {
             const { paragraphId } = action.payload as IParagraph;

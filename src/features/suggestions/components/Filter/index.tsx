@@ -16,16 +16,17 @@ interface IProps {
     showApproved: boolean;
     onChange: Function;
     onApplyFilter: Function;
+    onChangeSearchText: (s: string) => void;
 }
 
 class Filter extends React.Component<IProps & WithNamespaces> {
     render() {
-        const { t, showApproved, onChange, onApplyFilter } = this.props;
+        const { t, showApproved, onChange, onApplyFilter, onChangeSearchText } = this.props;
         return (
             <Paper withShadow>
                 <Column justify={Justify.Center}>
                     <Row style={{ height: 40, width: "100%", marginBottom: 10 }} justify={Justify.SpaceBetween}>
-                        <Input onChange={console.warn} timeout={500} />
+                        <Input onChange={onChangeSearchText} timeout={500} />
                         <CheckBox
                             style={{ minWidth: 200, marginLeft: 10 }}
                             defaultChecked={showApproved}
@@ -49,5 +50,6 @@ export default connect(
     dispatch => ({
         onChange: () => dispatch(actions.toggleShowApproved()),
         onApplyFilter: () => dispatch(actions.getAllWithoutLoader()),
+        onChangeSearchText: searchText => dispatch(actions.changeSearchText(searchText))
     })
 )(withNamespaces()(Filter));
