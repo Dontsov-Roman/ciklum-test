@@ -11,9 +11,10 @@ import Text from "../../components/Text";
 import Column from "../../components/Column";
 import Row, { Justify } from "../../components/Row";
 import Paper from "../../components/Paper";
-import { IArticle, recursiveToArray } from "./redux/reducer";
+import { IArticle } from "./redux/reducer";
 import Paragraph from "./components/Paragraph";
 import Filter from "./components/Filter";
+import { recursiveToArray } from "../../redux/reducers/factory";
 
 interface IStoreProps {
     fetching: boolean;
@@ -72,11 +73,11 @@ export default connect(
         onReject: item => dispatch(actions.rejectSuggestion(item)),
     })
 )(
-    withOnmount(
+    // withOnmount(
         withLoading(
             withEmptyScreen("noSuggestions")(
                     Suggestions
                 )
             )
-    )
+    // )
 );

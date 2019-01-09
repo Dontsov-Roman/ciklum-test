@@ -4,4 +4,8 @@ import repo, { IParagraph } from "../repo";
 
 const defaultAction = Factory<IParagraph>(constants, repo);
 const byIndexActions = FactoryByIndex<IParagraph>(constants, repo);
-export default { ...defaultAction, ...byIndexActions };
+export default {
+    ...defaultAction,
+    ...byIndexActions,
+    changeUrl: (payload: string) => ({ type: constants.changeUrl, payload })
+};

@@ -1,14 +1,11 @@
 import { List } from "immutable";
 import constants from "./constants";
-import Factory, { ISimpleState, FactoryWithCreate } from "../../../redux/reducers/factory";
+import Factory, { ISimpleState, FactoryWithCreate, IData } from "../../../redux/reducers/factory";
 import { ISuggestion } from "../repo";
 import { AnyAction } from "redux/lib/redux";
 
 interface Action<Payload> extends AnyAction {
     payload: Payload;
-}
-interface IData<T> {
-    data: List<T>;
 }
 
 export interface IParagraph extends IData<ISuggestion> {
@@ -24,31 +21,13 @@ export interface ISuggestionState extends ISimpleState<IArticle> {
     showApproved: boolean;
     searchText: string;
 }
-const initState: ISuggestionState = {
+export const initState: ISuggestionState = {
     fetching: false,
     fetchingOne: false,
     current: undefined,
     showApproved: false,
     searchText: "",
     data: List<IArticle>()
-};
-export const recursiveToArray = (list?: List<IData<any>>) => {
-    const arr = [];
-    if (list && list.forEach) {
-        list.forEach(d => {
-            const data = d.data && d.data.toArray ? d.data.toArray() : [];
-            data.forEach(d => {
-                if (d.data) {
-                    d.data = recursiveToArray(d.data);
-                }
-            });
-            arr.push({
-                ...d,
-                data
-            });
-        });
-    }
-    return arr;
 };
 
 const groupReducer = (

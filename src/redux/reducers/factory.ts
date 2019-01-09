@@ -2,13 +2,48 @@ import IConstants, { IConstantsCreate, IConstantsByIndex } from "../constants";
 import { Reducer, AnyAction } from "redux/lib/redux";
 import { List } from "immutable";
 
-export interface ISimpleState<Item> {
+export interface IData<T> {
+    data: List<T>;
+}
+export interface IDataArray<T> {
+    data: T[];
+}
+export interface ISimpleState<Item> extends IData<Item> {
     fetching: boolean;
-    data: List<Item>;
     fetchingOne: boolean;
     current?: Item;
+    lastUpdate?: Date;
     [key: string]: any;
 }
+
+export const recursiveToArray = (list?: List<IData<any>>) => {
+    const arr = [];
+    if (list && list.forEach) {
+        list.forEach(d => {
+            const data = d.data && d.data.toArray ? d.data.toArray() : [];
+            data.forEach(d => {
+                if (d.data && d.data.size) {
+                    d.data = recursiveToArray(d.data);
+                }
+            });
+            arr.push({
+                ...d,
+                data
+            });
+        });
+    }
+    return arr;
+};
+export const recursiveToList = (arr?: IDataArray<any>[]): List<any> => {
+    if (arr && arr.length > 0) {
+        return List(arr.map((item) => ({
+            ...item,
+            data: (item.data && item.data.length) ? recursiveToList(item.data) : List()
+        })));
+    }
+    return List();
+};
+
 export const FactoryWithCreate = <Item, State extends ISimpleState<Item>>
     (constants: IConstantsCreate, initState: State): Reducer<State, AnyAction> =>
     (state: State = initState, action: AnyAction): State => {
@@ -60,7 +95,8 @@ export default <Item, State extends ISimpleState<Item>>
                 return {
                     ...state,
                     fetching: false,
-                    data: List<Item>(action.payload)
+                    data: List<Item>(action.payload),
+                    lastUpdate: new Date()
                 };
             }
             case constants.getAllFail: {

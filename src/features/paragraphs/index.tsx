@@ -7,7 +7,7 @@ import suggestionsActions from "../suggestions/redux/actions";
 import IStore from "../../redux/store";
 import { IParagraph } from "./repo";
 import withLoading from "../shared/hocs/withLoader";
-import withOnmount from "../shared/hocs/withOnmountRouter";
+import withOnmount from "./hocs/withOnmountRouter";
 import withEmptyScreen from "../shared/hocs/withEmptyScreen";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
@@ -18,6 +18,7 @@ import { ISuggestion } from "../suggestions/repo";
 interface IStoreProps {
     fetching: boolean;
     data: IParagraph[];
+    url: string;
 }
 interface IStoreDispatchProps {
     onMount: (params: { url: string }) => void;
@@ -56,6 +57,7 @@ export class Paragraphs extends React.Component<IProps> {
 export default connect(
     (state: IStore): IStoreProps => ({
         fetching: state.paragraphs.fetching,
+        url: state.paragraphs.url,
         data: state.paragraphs.data.toArray()
     }),
     (dispatch): IStoreDispatchProps => ({
