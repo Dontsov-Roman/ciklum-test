@@ -1,6 +1,10 @@
 export interface IParams {
     [key: string]: any;
 }
+export interface IParamsLazyLoad extends IParams {
+    page: number;
+    per_page: number;
+}
 export const generalUrl = "http://localhost:3022/api";
 export default interface IRepository<T, C = any> {
     getAll: (params?: IParams) => Promise<T[]>;

@@ -7,12 +7,13 @@ export { Justify };
 
 interface IProps {
     justify?: Justify;
+    style?: {};
 }
 
-const Column: React.FunctionComponent<IProps> = ({ children, justify }) => {
+const Column: React.FunctionComponent<IProps> = ({ children, justify, style }) => {
     const className = `column${getClassNameByJustify(justify)}`;
     return (
-        <div className={className}>
+        <div style={style} className={className}>
             {children}
         </div>
     );

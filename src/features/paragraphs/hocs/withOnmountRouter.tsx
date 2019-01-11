@@ -15,7 +15,7 @@ const WithOnmount = (Component: React.ComponentType<P>) =>
         componentWillMount() {
             const { onMount, location: { search }, url } = this.props;
             const params = parse(search);
-            if (url !== params.url) onMount(parse(search));
+            onMount(params);
         }
         render() {
             return <Component {...this.props} />;

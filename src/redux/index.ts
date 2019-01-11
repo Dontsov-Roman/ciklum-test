@@ -34,8 +34,7 @@ export class AppRedux {
             applyMiddleware(thunk)
         );
         const { suggestions } = store.getState();
-        if (suggestions.data.size < 1) store.dispatch(suggestionsAction.getAll());
-        // if (paragraphs.data.size < 1) store.dispatch(paragraphsAction.getAll());
+        if (suggestions.data.size < 1) store.dispatch(suggestionsAction.getMore());
         return store;
     }
     private loadState() {

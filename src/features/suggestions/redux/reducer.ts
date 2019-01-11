@@ -1,6 +1,6 @@
 import { List } from "immutable";
 import constants from "./constants";
-import Factory, { ISimpleState, FactoryWithCreate, IData } from "../../../redux/reducers/factory";
+import Factory, { FactoryWithCreate, IData, ILazyLoadStateSimple, FactoryWithLazyLoad } from "../../../redux/reducers/factory";
 import { ISuggestion } from "../repo";
 import { AnyAction } from "redux/lib/redux";
 
@@ -17,9 +17,10 @@ export { ISuggestion };
 export interface IArticle extends IData<IParagraph> {
     articleUrl: string;
 }
-export interface ISuggestionState extends ISimpleState<IArticle> {
+export interface ISuggestionState extends ILazyLoadStateSimple<IArticle> {
     showApproved: boolean;
     searchText: string;
+    rawData: ISuggestion[];
 }
 export const initState: ISuggestionState = {
     fetching: false,
@@ -27,7 +28,11 @@ export const initState: ISuggestionState = {
     current: undefined,
     showApproved: false,
     searchText: "",
-    data: List<IArticle>()
+    page: 1,
+    per_page: 5,
+    fetchingLazyLoad: false,
+    data: List<IArticle>(),
+    rawData: []
 };
 
 const groupReducer = (
@@ -85,15 +90,18 @@ const groupReducer = (
 
 const defaultReducer = Factory<IArticle, ISuggestionState>(constants, initState);
 const createReducer = FactoryWithCreate<IArticle, ISuggestionState>(constants, initState);
+const lazyloadReducer = FactoryWithLazyLoad<IArticle, ISuggestionState>(constants, initState);
 
 export default (state: ISuggestionState = initState, action: AnyAction): ISuggestionState => {
     switch (action.type) {
-        case constants.getAllSuccess:
-            return groupReducer(state, action);
-        case constants.showApprovedToggle: {
+        case constants.getAllSuccess: {
+            const groupedState = groupReducer(state, action);
+            return { ...groupedState, rawData: action.payload, page: 1 };
+        }
+        case constants.setShowApproved: {
             return {
                 ...state,
-                showApproved: !state.showApproved
+                showApproved: action.payload
             };
         }
         case constants.changeSearchText: {
@@ -162,6 +170,17 @@ export default (state: ISuggestionState = initState, action: AnyAction): ISugges
             }
             return state;
         }
-        default: return createReducer(defaultReducer(state, action), action);
+        case constants.lazyLoadSuccess: {
+            const rawData = state.rawData.concat(action.payload.data);
+            const groupedState = groupReducer(state, { ...action, payload: rawData });
+            return {
+                ...groupedState,
+                rawData,
+                fetchingLazyLoad: false,
+                page: action.payload.page,
+                fetching: false
+            };
+        }
+        default: return lazyloadReducer(createReducer(defaultReducer(state, action), action), action);
     }
 };

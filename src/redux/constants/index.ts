@@ -5,6 +5,7 @@ export default interface IConstants {
     getByIdRequest: string;
     getByIdSuccess: string;
     getByIdFail: string;
+    resetStorage: string;
 }
 
 export interface IConstantsByIndex {
@@ -16,4 +17,11 @@ export interface IConstantsCreate {
     createItemRequest: string;
     createItemSuccess: string;
     createItemFail: string;
+}
+
+export interface IConstantsLazyLoad {
+    lazyLoadRequest: string;
+    lazyLoadSuccess: string;
+    lazyLoadFail: string;
+    lazyLoadSetPage: string;
 }

@@ -1,4 +1,4 @@
-import IConstants, { IConstantsCreate, IConstantsByIndex } from "../constants";
+import IConstants, { IConstantsCreate, IConstantsByIndex, IConstantsLazyLoad } from "../constants";
 import { Reducer, AnyAction } from "redux/lib/redux";
 import { List } from "immutable";
 
@@ -15,6 +15,12 @@ export interface ISimpleState<Item> extends IData<Item> {
     lastUpdate?: Date;
     [key: string]: any;
 }
+export interface ILazyLoadState {
+    page: number;
+    per_page: number;
+    fetchingLazyLoad: boolean;
+}
+export interface ILazyLoadStateSimple <RepoItem> extends ISimpleState<RepoItem>, ILazyLoadState {}
 
 export const recursiveToArray = (list?: List<IData<any>>) => {
     const arr = [];
@@ -81,6 +87,31 @@ export const FactoryByIndex = <Item, State extends ISimpleState<Item>>
             default: return state;
         }
     };
+
+export const FactoryWithLazyLoad = <Item, State extends ILazyLoadStateSimple<Item>>
+    (constants: IConstantsLazyLoad, initState: State): Reducer<State, AnyAction> =>
+    (state: State = initState, action: AnyAction): State => {
+        switch(action.type) {
+            case constants.lazyLoadRequest: {
+                return { ...state, fetchingLazyLoad: true };
+            }
+            case constants.lazyLoadSuccess: {
+                return {
+                    ...state,
+                    data: state.data.concat(action.payload.data),
+                    fetchingLazyLoad: false,
+                    page: action.payload.page
+                };
+            }
+            case constants.lazyLoadFail: {
+                return { ...state, fetchingLazyLoad: false };
+            }
+            case constants.lazyLoadSetPage: {
+                return { ...state, page: action.payload };
+            }
+            default: return state;
+        }
+    };
 export default <Item, State extends ISimpleState<Item>>
     (constants: IConstants, initState: State): Reducer<State, AnyAction> =>
     (state: State = initState, action: AnyAction): State => {
@@ -125,6 +156,9 @@ export default <Item, State extends ISimpleState<Item>>
                     fetchingOne: false,
                     current: undefined
                 };
+            }
+            case constants.resetStorage: {
+                return { ...initState };
             }
             default: return state;
         }

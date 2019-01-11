@@ -1,6 +1,6 @@
-import { ThunkAction } from "redux-thunk";
-import IConstants, { IConstantsCreate, IConstantsByIndex } from "../constants";
-import IRepository, { IParams } from "../../repository/IRepository";
+import { ThunkAction, Action } from "redux-thunk";
+import IConstants, { IConstantsCreate, IConstantsByIndex, IConstantsLazyLoad } from "../constants";
+import IRepository, { IParams, IParamsLazyLoad } from "../../repository/IRepository";
 import IStore from "../store";
 
 export type SimpleThunkAction = ThunkAction<void, IStore, any, any>;
@@ -9,12 +9,17 @@ export interface IFactoryAction<RepoItem> {
     getAllWithoutLoader: (params?: IParams) => SimpleThunkAction;
     getAll: (params?: IParams) => SimpleThunkAction;
     getById: (id: string | number) => SimpleThunkAction;
+    resetStorage: () => Action;
 }
 export interface IFactoryByIndex<RepoItem> {
     removeByIdIndex: (id: string | number, index: number) => SimpleThunkAction;
     removeByIndex: (index: number) => SimpleThunkAction;
     updateByIndex: (index: number, item: RepoItem) => SimpleThunkAction;
     updateAndSendToServer: (index: number, item: RepoItem) => SimpleThunkAction;
+}
+export interface IFactoryLazyLoad <RepoItem> {
+    getMore: (params?: IParamsLazyLoad) => SimpleThunkAction;
+    setPage: (page: number) => Action;
 }
 export interface IFactoryActionCreate<RepoItem> {
     create: (item: RepoItem) => SimpleThunkAction;
@@ -79,6 +84,28 @@ export const FactoryByIndex =
                 updateAndSendToServer
             };
     };
+export const FactoryLazyLoad =
+    <RepoItem>(constants: IConstantsLazyLoad, repository: IRepository<RepoItem>)
+: IFactoryLazyLoad<RepoItem> => ({
+    getMore: (params) => async (dispatch, getState) => {
+        dispatch({ type: constants.lazyLoadRequest });
+        try {
+            const data = await repository.getAll(params);
+            if (!data || !data.length) {
+                throw new Error("No data");
+            }
+            dispatch({
+                type: constants.lazyLoadSuccess,
+                payload: { page: params.page + 1, data }
+            });
+        }
+        catch(e) {
+            console.warn(e);
+            dispatch({ type: constants.lazyLoadFail });
+        }
+    },
+    setPage: payload => ({ type: constants.lazyLoadSetPage, payload }),
+});
 export default <RepoItem>(constants: IConstants, repository: IRepository<RepoItem>): IFactoryAction<RepoItem> => {
     const getAllWithoutLoader = (params?: IParams) => async(dispatch, getState) => {
         try {
@@ -95,6 +122,7 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
             });
         }
     };
+    const resetStorage = () => ({ type: constants.resetStorage });
     const getAll = (params?: IParams) => async (dispatch, getState) => {
         dispatch({
             type: constants.getAllRequest
@@ -123,5 +151,6 @@ export default <RepoItem>(constants: IConstants, repository: IRepository<RepoIte
         getAllWithoutLoader,
         getAll,
         getById,
+        resetStorage
     };
 };

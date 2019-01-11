@@ -11,6 +11,7 @@ const constants: IConstantsParagraphs = {
     getByIdFail: "PARAGRAPHS_GET_GET_BY_ID_FAIL",
     removeByIndex: "PARAGRAPHS_REMOVE_BY_INDEX",
     updateByIndex: "PARAGRAPHS_UPDATE_BY_INDEX",
-    changeUrl: "PARAGRAPHS_CHANGE_URL"
+    changeUrl: "PARAGRAPHS_CHANGE_URL",
+    resetStorage: "PARAGRAPHS_RESET_STORAGE"
 };
 export default constants;

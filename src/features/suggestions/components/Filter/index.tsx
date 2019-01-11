@@ -18,11 +18,12 @@ interface IProps {
     onApplyFilter: Function;
     onChangeSearchText: (s: string) => void;
     searchText: string;
+    per_page: number;
 }
 
 class Filter extends React.Component<IProps & WithNamespaces> {
     render() {
-        const { t, showApproved, onChange, onApplyFilter, onChangeSearchText, searchText } = this.props;
+        const { t, showApproved, onChange, onApplyFilter, onChangeSearchText, searchText, per_page } = this.props;
         return (
             <Paper withShadow>
                 <Column justify={Justify.Center}>
@@ -32,7 +33,7 @@ class Filter extends React.Component<IProps & WithNamespaces> {
                             style={{ minWidth: 200, marginLeft: 10 }}
                             defaultChecked={showApproved}
                             text={t("showApproved")}
-                            onChange={onChange}
+                            onChange={() => onChange(!showApproved)}
                         />
                     </Row>
                     <Button primary onClick={onApplyFilter}>
@@ -47,11 +48,12 @@ class Filter extends React.Component<IProps & WithNamespaces> {
 export default connect(
     (state: IStore) => ({
         showApproved: state.suggestions.showApproved,
-        searchText: state.suggestions.searchText
+        searchText: state.suggestions.searchText,
+        per_page: state.suggestions.per_page
     }),
     dispatch => ({
-        onChange: () => dispatch(actions.toggleShowApproved()),
-        onApplyFilter: () => dispatch(actions.getAllWithoutLoader()),
-        onChangeSearchText: searchText => dispatch(actions.changeSearchText(searchText))
+        onChange: (showApproved) => dispatch(actions.setShowApproved(showApproved)),
+        onApplyFilter: () => dispatch(actions.applyFilter()),
+        onChangeSearchText: (searchText: string) => dispatch(actions.changeSearchText(searchText))
     })
 )(withNamespaces()(Filter));

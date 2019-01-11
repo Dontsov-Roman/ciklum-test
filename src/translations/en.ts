@@ -10,5 +10,7 @@ export default {
     showUsersSuggestions: "Show users suggestions",
     ownSuggestion: "Own suggestion",
     showApproved: "Show approved",
-    apply: "Apply"
+    apply: "Apply",
+    search: "Search",
+    getMore: "Get more"
 };
