@@ -27,7 +27,27 @@ interface ISuggestionActions extends IFactoryAction<ISuggestion>,
     changeSearchText: (searchText: string) => Action;
     applyFilter: () => SimpleThunkAction;
 }
-
+const getAllWithoutLoader = (params?: IParams) => async(dispatch, getState) => {
+    try {
+        const { suggestions: { showApproved } }: IStore = getState();
+        const payload = await repo.getAll({ ...params, showApproved });
+        dispatch({
+            type: constants.getAllSuccess,
+            payload
+        });
+    }
+    catch(e) {
+        dispatch({
+            type: constants.getAllFail
+        });
+    }
+};
+const getAll = (params?: IParams) => async (dispatch, getState) => {
+    dispatch({
+        type: constants.getAllRequest
+    });
+    dispatch(getAllWithoutLoader(params));
+};
 const changeSearchText = (payload: string) => ({ type: constants.changeSearchText, payload });
 const setShowApproved = (payload: boolean) => ({ type: constants.setShowApproved, payload });
 const getMore = (params?) => (dispatch, getState) => {
@@ -38,6 +58,8 @@ const actions: ISuggestionActions = {
     ...defaultAction,
     ...createActions,
     ...lazyloadActions,
+    getAllWithoutLoader,
+    getAll,
     getMore,
     setShowApproved,
     changeSearchText,

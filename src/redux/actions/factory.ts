@@ -109,8 +109,7 @@ export const FactoryLazyLoad =
 export default <RepoItem>(constants: IConstants, repository: IRepository<RepoItem>): IFactoryAction<RepoItem> => {
     const getAllWithoutLoader = (params?: IParams) => async(dispatch, getState) => {
         try {
-            const { suggestions: { showApproved } }: IStore = getState();
-            const payload = await repository.getAll({ ...params, showApproved });
+            const payload = await repository.getAll(params);
             dispatch({
                 type: constants.getAllSuccess,
                 payload
