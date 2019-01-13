@@ -171,7 +171,15 @@ export default (state: ISuggestionState = initState, action: AnyAction): ISugges
             return state;
         }
         case constants.lazyLoadSuccess: {
-            const rawData = state.rawData.concat(action.payload.data);
+            const uniqIds = new Set();
+            let rawData: ISuggestion[] = [];
+            rawData = rawData.concat(state.rawData);
+            state.rawData.map(({ id }) => uniqIds.add(id));
+            action.payload.data.map((suggestion: ISuggestion) => {
+                if (!uniqIds.has(suggestion.id)) {
+                    rawData.push(suggestion);
+                }
+            });
             const groupedState = groupReducer(state, { ...action, payload: rawData });
             return {
                 ...groupedState,
