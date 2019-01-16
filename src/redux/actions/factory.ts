@@ -94,9 +94,10 @@ export const FactoryLazyLoad =
             if (!data || !data.length) {
                 throw new Error("No data");
             }
+            const page = data.length < params.per_page ? params.page : params.page + 1;
             dispatch({
                 type: constants.lazyLoadSuccess,
-                payload: { page: params.page + 1, data }
+                payload: { page, data }
             });
         }
         catch(e) {
